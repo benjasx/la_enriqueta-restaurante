@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/Reveal";
 import { site, whatsappUrl } from "@/data/site";
 
 const label = "text-muted font-mono text-[11px] tracking-[0.16em] uppercase";
@@ -9,14 +10,14 @@ export const Contact = () => (
   >
     <div className="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,360px),1fr))] gap-[clamp(28px,4vw,48px)]">
       <div id="contacto" className="flex flex-col gap-7">
-        <div>
+        <Reveal>
           <div className="text-orange mb-3 font-mono text-xs tracking-[0.2em] uppercase">
             Ubicación y Contacto
           </div>
           <h2 className="font-display text-wine m-0 text-[clamp(36px,5vw,58px)] leading-none font-normal">
             Te esperamos
           </h2>
-        </div>
+        </Reveal>
         <div className="flex flex-col gap-1.5">
           <div className={label}>Dirección</div>
           <address className="text-lg leading-normal not-italic">

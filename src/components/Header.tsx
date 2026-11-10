@@ -1,3 +1,4 @@
+import { useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
 import { site, whatsappUrl } from "@/data/site";
 
@@ -12,9 +13,18 @@ const links = [
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 8));
 
   return (
-    <header className="border-line sticky top-0 z-50 border-b bg-[rgba(251,246,238,0.94)] backdrop-blur-[10px]">
+    <header
+      className={`border-line sticky top-0 z-50 border-b backdrop-blur-[10px] transition-[background-color,box-shadow] duration-300 ${
+        scrolled
+          ? "bg-[rgba(251,246,238,0.98)] shadow-[0_8px_24px_-16px_rgba(120,20,60,0.35)]"
+          : "bg-[rgba(251,246,238,0.94)]"
+      }`}
+    >
       <nav
         aria-label="Principal"
         className="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-[clamp(16px,4vw,32px)] py-3"

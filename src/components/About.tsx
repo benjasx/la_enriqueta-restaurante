@@ -1,4 +1,5 @@
 import { Photo } from "@/components/Photo";
+import { Reveal } from "@/components/Reveal";
 
 const badges = ["Masa hecha a mano", "Recetas familiares", "Cocina nayarita"];
 
@@ -16,12 +17,14 @@ export const About = () => (
         />
       </div>
       <div>
-        <div className="mb-3.5 font-mono text-xs tracking-[0.2em] text-[#ffc79e] uppercase">
-          Nosotros
-        </div>
-        <h2 className="font-display m-0 mb-6 text-[clamp(34px,4.6vw,54px)] leading-[1.05] font-normal text-balance">
-          Sazón de Tuxpan, servido en Tepic
-        </h2>
+        <Reveal>
+          <div className="mb-3.5 font-mono text-xs tracking-[0.2em] text-[#ffc79e] uppercase">
+            Nosotros
+          </div>
+          <h2 className="font-display m-0 mb-6 text-[clamp(34px,4.6vw,54px)] leading-[1.05] font-normal text-balance">
+            Sazón de Tuxpan, servido en Tepic
+          </h2>
+        </Reveal>
         <p className="font-display m-0 max-w-[560px] text-[clamp(20px,2vw,24px)] leading-[1.45] text-pretty text-white">
           Desde el corazón del sazón y el reino del sabor, ofreceremos en Tepic
           antojitos tuxpeños, como solo en el bello Tuxpan los puedes encontrar.
