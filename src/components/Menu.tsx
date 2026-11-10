@@ -34,7 +34,7 @@ export const Menu = () => {
               Menú Digital
             </div>
             <h2 className="font-display text-wine m-0 text-[clamp(36px,5vw,58px)] leading-none font-normal">
-              ¿Qué se te antoja hoy?
+              ¿Qué se te antoja hoy !?
             </h2>
             <div aria-hidden="true" className="mt-[18px] flex gap-1.5">
               {["bg-wine", "bg-orange", "bg-green", "bg-gold"].map((c) => (
