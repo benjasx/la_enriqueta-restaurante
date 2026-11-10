@@ -1,87 +1,154 @@
-// TODO: replace every placeholder below with real data from the client.
 export const site = {
   name: "La Enriqueta",
   tagline: "Antojitos Tuxpeños",
-  description:
-    "Restaurante La Enriqueta en Tepic, Nayarit. Antojitos tuxpeños, menú digital, ubicación y pedidos por WhatsApp.",
   city: "Tepic, Nayarit",
-  address: "Dirección por definir, Tepic, Nayarit", // TODO
-  phone: "0000000000", // TODO: 10 digits
-  whatsapp: "520000000000", // TODO: country code + number, digits only
-  mapsEmbedUrl: "", // TODO: Google Maps embed URL
-  schedule: [{ days: "Lunes a domingo", hours: "Horario por definir" }], // TODO
-  about:
-    "Texto de historia por definir con el cliente. Aquí va una breve presentación de La Enriqueta y de sus antojitos tuxpeños.", // TODO
+  addressLines: ["C. Brasil 261, Col. Moctezuma", "Tepic, Nayarit"],
+  phone: "523115130988",
+  phoneLabel: "311 513 0988",
+  whatsapp: "523115130988",
+  mapsEmbedUrl:
+    "https://maps.google.com/maps?q=C.%20Brasil%20261%2C%20Moctezuma%2C%20Tepic%2C%20Nayarit&z=16&output=embed",
+  hours: [
+    { days: "Martes a Domingo", time: "8:00 – 17:00", open: true },
+    { days: "Lunes", time: "Cerrado", open: false },
+  ],
 };
 
-export type MenuItem = {
+export const whatsappUrl = (
+  message = "¡Hola La Enriqueta! Me gustaría hacer un pedido.",
+) => `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+
+export type CategoryId = "entradas" | "tradicionales";
+
+export type Dish = {
+  category: CategoryId;
   name: string;
+  unit: string;
   description: string;
-  price: number;
   image?: string;
+  price?: number;
+  options?: { label: string; price: number }[];
 };
 
-export type MenuCategory = { id: string; title: string; items: MenuItem[] };
+export const categories: { id: "todos" | CategoryId; label: string }[] = [
+  { id: "todos", label: "Todo" },
+  { id: "entradas", label: "Entradas" },
+  { id: "tradicionales", label: "Antojitos Tradicionales" },
+];
 
-// TODO: placeholder dishes and prices, replace with the client's real menu (max 25 items).
-export const menu: MenuCategory[] = [
+export const categoryTag: Record<CategoryId, { label: string; bg: string }> = {
+  entradas: { label: "Entrada", bg: "bg-orange" },
+  tradicionales: { label: "Tradicional", bg: "bg-wine" },
+};
+
+export const dishes: Dish[] = [
   {
-    id: "platos-fuertes",
-    title: "Platos fuertes",
-    items: [
-      {
-        name: "Chilaquiles con carne",
-        description: "Totopos, salsa, queso, frijoles y carne.",
-        price: 0,
-        image: "/img/platillo.jpg",
-      },
-      {
-        name: "Platillo ejemplo",
-        description: "Descripción breve del platillo.",
-        price: 0,
-      },
+    category: "entradas",
+    name: "Gorditas Estilo Tuxpan",
+    unit: "5 piezas",
+    description: "Disfruta nuestras gorditas en su versión suave o dorada.",
+    image: "/img/platillo.jpg",
+    options: [
+      { label: "Papa", price: 90 },
+      { label: "Pollo", price: 90 },
+      { label: "Pierna", price: 95 },
     ],
   },
   {
-    id: "antojitos",
-    title: "Antojitos",
-    items: [
-      {
-        name: "Antojito ejemplo",
-        description: "Descripción breve del platillo.",
-        price: 0,
-      },
+    category: "entradas",
+    name: "Burritos",
+    unit: "1 pieza",
+    description:
+      "Deliciosas tortillas de harina, rellenas de pollo o pierna acompañadas de verdura y salsa.",
+    options: [
+      { label: "Pollo", price: 40 },
+      { label: "Pierna", price: 45 },
     ],
   },
   {
-    id: "bebidas",
-    title: "Bebidas",
-    items: [
-      {
-        name: "Bebida ejemplo",
-        description: "Descripción breve de la bebida.",
-        price: 0,
-      },
-    ],
+    category: "entradas",
+    name: "Quesadillas",
+    unit: "1 pieza",
+    description: "Clásica quesadilla de harina, acompáñala a tu gusto.",
+    price: 50,
   },
   {
-    id: "postres",
-    title: "Postres",
-    items: [
-      {
-        name: "Postre ejemplo",
-        description: "Descripción breve del postre.",
-        price: 0,
-      },
-    ],
+    category: "entradas",
+    name: "Rollitos Enriqueto",
+    unit: "orden",
+    description:
+      "Taquitos dorados enrollados con crema, queso y salsa de la casa.",
+    price: 70,
+  },
+  {
+    category: "entradas",
+    name: "Guacamole",
+    unit: "orden",
+    description: "Aguacate machacado con jitomate, cebolla, chile y totopos.",
+    price: 80,
+  },
+  {
+    category: "tradicionales",
+    name: "Pozole",
+    unit: "plato",
+    description:
+      "Pozole rojo de cerdo con lechuga, rábano, orégano, limón y tostadas.",
+    price: 110,
+  },
+  {
+    category: "tradicionales",
+    name: "Tostadas de Huesito",
+    unit: "pieza",
+    description:
+      "Carne de espinazo deshebrada sobre frijol, con repollo y salsa.",
+    price: 35,
+  },
+  {
+    category: "tradicionales",
+    name: "Tostadas de Pata",
+    unit: "pieza",
+    description: "Pata de cerdo en vinagre con frijol, lechuga, crema y queso.",
+    price: 35,
+  },
+  {
+    category: "tradicionales",
+    name: "Chanfaina",
+    unit: "plato",
+    description:
+      "Guiso tradicional en salsa de chile, servido con frijoles y totopos.",
+    price: 95,
   },
 ];
 
-export const gallery = [
-  { src: "/img/local.jpg", alt: "Fachada del restaurante La Enriqueta" },
-  { src: "/img/platillo.jpg", alt: "Platillo de La Enriqueta" },
-  { src: "/img/carta.jpg", alt: "Carta de La Enriqueta" },
-];
+export const minPrice = (d: Dish) =>
+  d.options ? Math.min(...d.options.map((o) => o.price)) : (d.price ?? 0);
 
-export const whatsappUrl = (message = "Hola, quiero hacer un pedido.") =>
-  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+export const gallery: {
+  id: string;
+  hint: string;
+  src?: string;
+  className: string;
+}[] = [
+  {
+    id: "gal-1",
+    hint: "Platillo",
+    src: "/img/platillo.jpg",
+    className: "row-span-2",
+  },
+  { id: "gal-2", hint: "Cocina: masa a mano", className: "" },
+  { id: "gal-3", hint: "Platillo: gorditas", className: "" },
+  {
+    id: "gal-4",
+    hint: "Fachada",
+    src: "/img/local.jpg",
+    className: "min-[560px]:col-span-2",
+  },
+  {
+    id: "gal-5",
+    hint: "Carta",
+    src: "/img/carta.jpg",
+    className: "row-span-2",
+  },
+  { id: "gal-6", hint: "Instalaciones: comedor", className: "" },
+  { id: "gal-7", hint: "Cocina: ollas y comal", className: "" },
+];

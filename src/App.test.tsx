@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { App } from "@/App";
 
 describe("App", () => {
@@ -8,14 +9,23 @@ describe("App", () => {
       screen.getByRole("heading", { level: 1, name: /la enriqueta/i }),
     ).toBeInTheDocument();
     for (const name of [
-      "Menú",
-      "Galería",
-      "Nosotros",
-      "Ubicación y contacto",
+      "¿Qué se te antoja hoy?",
+      "Sazón de Tuxpan, servido en Tepic",
+      "Pásale a ver",
+      "Te esperamos",
     ]) {
       expect(
         screen.getByRole("heading", { level: 2, name }),
       ).toBeInTheDocument();
     }
+  });
+
+  it("filters the menu by category", async () => {
+    render(<App />);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(9);
+    await userEvent.click(
+      screen.getByRole("tab", { name: /antojitos tradicionales/i }),
+    );
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
   });
 });

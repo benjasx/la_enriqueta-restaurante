@@ -1,23 +1,28 @@
+import { Photo } from "@/components/Photo";
 import { gallery } from "@/data/site";
 
 export const Gallery = () => (
-  <section id="galeria" className="bg-white py-16">
-    <div className="mx-auto max-w-5xl px-4">
-      <h2 className="font-display text-brand-pink text-4xl font-bold">
+  <section
+    id="galeria"
+    className="px-[clamp(20px,4vw,32px)] py-[clamp(64px,10vw,112px)]"
+  >
+    <div className="mx-auto max-w-[1200px]">
+      <div className="text-orange mb-3 font-mono text-xs tracking-[0.2em] uppercase">
         Galería
+      </div>
+      <h2 className="font-display text-wine m-0 mb-9 text-[clamp(36px,5vw,58px)] leading-none font-normal">
+        Pásale a ver
       </h2>
-      <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-flow-dense auto-rows-[220px] grid-cols-[repeat(auto-fill,minmax(min(100%,240px),1fr))] gap-3.5">
         {gallery.map((g) => (
-          <li key={g.src}>
-            <img
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              className="aspect-square w-full rounded-xl object-cover"
-            />
-          </li>
+          <div
+            key={g.id}
+            className={`relative overflow-hidden rounded-[18px] ${g.className}`}
+          >
+            <Photo src={g.src} hint={g.hint} />
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 );
