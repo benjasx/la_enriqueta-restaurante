@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-orange: #ef7d1a;
+  --color-brand-pink: #d6246e;
+  --color-brand-green: #2f7d4f;
+  --color-brand-cream: #fdf3e0;
+  --color-brand-ink: #3a1f12;
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Nunito", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-brand-cream);
+  color: var(--color-brand-ink);
+  font-family: var(--font-sans);
+}
+
+section[id] {
+  scroll-margin-top: 4rem;
+}

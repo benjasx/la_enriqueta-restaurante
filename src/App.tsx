@@ -1,7 +1,23 @@
-export const App = () => {
-  return (
-    <main className="grid min-h-screen place-items-center bg-slate-950 text-slate-100">
-      <h1 className="text-3xl font-semibold">React + TypeScript + Tailwind</h1>
+import { About } from "@/components/About";
+import { Contact } from "@/components/Contact";
+import { Gallery } from "@/components/Gallery";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { Menu } from "@/components/Menu";
+import { site } from "@/data/site";
+
+export const App = () => (
+  <>
+    <Header />
+    <main>
+      <Hero />
+      <Menu />
+      <Gallery />
+      <About />
+      <Contact />
     </main>
-  );
-};
+    <footer className="bg-brand-ink py-6 text-center text-sm text-white">
+      © {new Date().getFullYear()} {site.name} · {site.tagline}
+    </footer>
+  </>
+);
