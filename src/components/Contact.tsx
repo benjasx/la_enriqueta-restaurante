@@ -1,20 +1,24 @@
 import { Reveal } from "@/components/Reveal";
 import { site, whatsappUrl } from "@/data/site";
 
-const label = "text-muted font-mono text-[11px] tracking-[0.16em] uppercase";
+const label =
+  "text-muted font-sans text-[11px] font-semibold tracking-[0.16em] uppercase";
 
 export const Contact = () => (
   <section
     id="ubicacion"
-    className="bg-sand px-[clamp(20px,4vw,32px)] py-[clamp(64px,10vw,112px)]"
+    className="px-[clamp(20px,4vw,32px)] py-[clamp(64px,10vw,112px)]"
   >
     <div className="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,360px),1fr))] gap-[clamp(28px,4vw,48px)]">
-      <div id="contacto" className="flex flex-col gap-7">
+      <div
+        id="contacto"
+        className="rounded-card shadow-card flex flex-col gap-7 bg-white p-[clamp(24px,4vw,40px)]"
+      >
         <Reveal>
-          <div className="text-orange mb-3 font-mono text-xs tracking-[0.2em] uppercase">
+          <div className="text-orange mb-3 font-sans text-xs font-semibold tracking-[0.2em] uppercase">
             Ubicación y Contacto
           </div>
-          <h2 className="font-display text-wine m-0 text-[clamp(36px,5vw,58px)] leading-none font-normal">
+          <h2 className="font-display text-wine m-0 text-[clamp(38px,5.5vw,64px)] leading-[0.98] font-semibold tracking-[-0.02em]">
             Te esperamos
           </h2>
         </Reveal>
@@ -39,7 +43,7 @@ export const Contact = () => (
           {site.hours.map((h) => (
             <div
               key={h.days}
-              className="flex justify-between gap-4 border-b border-dashed border-[#d9c4b2] pb-2.5 text-base"
+              className="border-line flex justify-between gap-4 border-b pb-2.5 text-base"
             >
               <span>{h.days}</span>
               <span
@@ -53,7 +57,7 @@ export const Contact = () => (
         <div className="flex flex-wrap gap-3">
           <a
             href={`tel:+${site.phone}`}
-            className="bg-orange hover:bg-orange-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-[14px] font-semibold text-white"
+            className="bg-orange hover:bg-orange-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
           >
             Llamar ahora
           </a>
@@ -61,13 +65,13 @@ export const Contact = () => (
             href={whatsappUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green hover:bg-green-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-[14px] font-semibold text-white"
+            className="bg-green hover:bg-green-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
           >
             Escribir por WhatsApp
           </a>
         </div>
       </div>
-      <div className="min-h-[380px] overflow-hidden rounded-3xl border-[6px] border-white shadow-[0_20px_40px_-24px_rgba(90,30,40,0.4)]">
+      <div className="rounded-card shadow-card min-h-[380px] overflow-hidden border-[6px] border-white">
         <iframe
           title="Mapa La Enriqueta Tepic"
           src={site.mapsEmbedUrl}

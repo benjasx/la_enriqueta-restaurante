@@ -11,7 +11,8 @@ import {
   type CategoryId,
 } from "@/data/site";
 
-const mono = "font-mono text-[10px] text-muted tracking-[0.06em]";
+const mono =
+  "font-sans text-[10px] font-medium text-muted tracking-[0.08em] uppercase";
 
 export const Menu = () => {
   const [cat, setCat] = useState<"todos" | CategoryId>("todos");
@@ -30,12 +31,16 @@ export const Menu = () => {
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
           <Reveal>
-            <div className="text-orange mb-3 font-mono text-xs tracking-[0.2em] uppercase">
+            <div className="text-orange mb-3 font-sans text-xs font-semibold tracking-[0.2em] uppercase">
               Menú Digital
             </div>
-            <h2 className="font-display text-wine m-0 text-[clamp(36px,5vw,58px)] leading-none font-normal">
-              ¿Qué se te antoja hoy !?
+            <h2 className="font-display text-wine m-0 text-[clamp(38px,5.5vw,64px)] leading-[0.98] font-semibold tracking-[-0.02em]">
+              ¿Qué se te antoja hoy?
             </h2>
+            <p className="text-body mt-4 mb-0 max-w-[460px] text-base leading-[1.55]">
+              Antojitos hechos al momento. Elige tu favorito y pídelo directo
+              por WhatsApp.
+            </p>
             <div aria-hidden="true" className="mt-[18px] flex gap-1.5">
               {["bg-wine", "bg-orange", "bg-green", "bg-gold"].map((c) => (
                 <span key={c} className={`size-2.5 rotate-45 ${c}`} />
@@ -44,7 +49,7 @@ export const Menu = () => {
           </Reveal>
           <div
             role="tablist"
-            className="border-line flex flex-wrap gap-2 rounded-full border bg-white p-1.5"
+            className="bg-sand flex flex-wrap gap-1 rounded-full p-1.5"
           >
             {categories.map((c) => (
               <button
@@ -55,8 +60,8 @@ export const Menu = () => {
                 onClick={() => setCat(c.id)}
                 className={`cursor-pointer rounded-full border-0 px-5 py-[11px] text-sm font-semibold transition-colors ${
                   cat === c.id
-                    ? "bg-wine text-white"
-                    : "text-body bg-transparent"
+                    ? "bg-wine shadow-card text-white"
+                    : "text-body hover:text-wine bg-transparent"
                 }`}
               >
                 {c.label}{" "}
@@ -75,7 +80,7 @@ export const Menu = () => {
                 <motion.article
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="border-line flex h-full flex-col overflow-hidden rounded-[20px] border bg-white transition-shadow hover:shadow-[0_14px_34px_-18px_rgba(120,20,60,0.35)]"
+                  className="rounded-card shadow-card flex h-full flex-col overflow-hidden bg-white transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(120,20,60,0.4)]"
                 >
                   <div className="relative aspect-[4/3]">
                     <Photo
@@ -84,21 +89,21 @@ export const Menu = () => {
                       alt={d.name}
                     />
                     <span
-                      className={`pointer-events-none absolute top-3 left-3 rounded-full px-2.5 py-[5px] font-mono text-[10px] tracking-[0.14em] text-white uppercase ${tag.bg}`}
+                      className={`pointer-events-none absolute top-3 left-3 rounded-full px-3 py-1.5 font-sans text-[10px] font-semibold tracking-[0.14em] text-white uppercase ${tag.bg}`}
                     >
                       {tag.label}
                     </span>
                   </div>
-                  <div className="flex flex-1 flex-col gap-2.5 px-5 pt-[18px] pb-5">
+                  <div className="flex flex-1 flex-col gap-3 px-6 pt-5 pb-6">
                     <div className="flex items-baseline justify-between gap-3">
-                      <h3 className="font-display text-ink m-0 text-[22px] leading-[1.15] font-normal">
+                      <h3 className="font-display text-ink m-0 text-[23px] leading-[1.15] font-semibold">
                         {d.name}
                       </h3>
                       <div className="shrink-0 text-right">
                         <div className={mono}>
                           {d.options && d.options.length > 1 ? "desde" : ""}
                         </div>
-                        <div className="text-wine text-xl font-bold">
+                        <div className="font-display text-wine text-2xl leading-none font-bold">
                           ${min}
                         </div>
                         <div className={mono}>{d.unit}</div>
@@ -121,10 +126,10 @@ export const Menu = () => {
                           >
                             <span>{o.label}</span>
                             <span className="flex items-center gap-2.5">
-                              <span className="text-wine font-bold">
+                              <span className="font-display text-wine font-bold">
                                 ${o.price}
                               </span>
-                              <span className="text-green font-mono text-[11px]">
+                              <span className="text-green font-sans text-[11px] font-semibold">
                                 Pedir →
                               </span>
                             </span>
@@ -138,7 +143,7 @@ export const Menu = () => {
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border-green text-green hover:bg-green hover:text-cream mt-1.5 flex min-h-11 items-center justify-center gap-2 rounded-xl border-[1.5px] text-sm font-semibold"
+                      className="border-green text-green hover:bg-green hover:text-cream mt-1.5 flex min-h-11 items-center justify-center gap-2 rounded-full border-[1.5px] text-sm font-semibold"
                     >
                       <span className="size-[7px] rounded-full bg-current" />
                       Ordenar por WhatsApp
@@ -149,7 +154,7 @@ export const Menu = () => {
             );
           })}
         </div>
-        <p className="text-muted mt-7 font-mono text-xs">
+        <p className="text-muted mt-7 font-sans text-xs">
           Precios en MXN, IVA incluido. Sujetos a cambio sin previo aviso.
         </p>
       </div>

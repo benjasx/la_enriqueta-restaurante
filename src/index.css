@@ -14,9 +14,10 @@
   --color-line: #eedfd0;
   --color-muted: #8a7470;
   --color-body: #5e4a4a;
-  --font-display: "Yeseva One", serif;
-  --font-sans: "Work Sans", system-ui, sans-serif;
-  --font-mono: "DM Mono", monospace;
+  --font-display: "Fraunces", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --radius-card: 24px;
+  --shadow-card: 0 10px 30px -12px rgba(42, 26, 31, 0.18);
 }
 
 html {

@@ -12,7 +12,7 @@ export const Photo = ({ src, hint, alt }: Props) =>
     <div
       role="img"
       aria-label={hint}
-      className="text-muted grid size-full place-items-center bg-[#f1e6da] p-3 text-center font-mono text-xs"
+      className="from-sand to-line text-muted grid size-full place-items-center bg-gradient-to-br p-4 text-center font-sans text-xs font-medium tracking-[0.12em] uppercase"
     >
       {hint}
     </div>

@@ -5,7 +5,7 @@ export const site = {
   addressLines: ["C. Brasil 261, Col. Moctezuma", "Tepic, Nayarit"],
   phone: "523115130988",
   phoneLabel: "311 513 0988",
-  whatsapp: "523115130988",
+  whatsapp: "523111397571",
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=C.%20Brasil%20261%2C%20Moctezuma%2C%20Tepic%2C%20Nayarit&z=16&output=embed",
   hours: [
@@ -83,6 +83,7 @@ export const dishes: Dish[] = [
   {
     category: "entradas",
     name: "Guacamole",
+    image: "/img/guacamole.jpeg",
     unit: "orden",
     description: "Aguacate machacado con jitomate, cebolla, chile y totopos.",
     price: 80,
@@ -90,6 +91,7 @@ export const dishes: Dish[] = [
   {
     category: "tradicionales",
     name: "Pozole",
+    image: "/img/pozole.jpeg",
     unit: "plato",
     description:
       "Pozole rojo de cerdo con lechuga, rábano, orégano, limón y tostadas.",
@@ -98,6 +100,7 @@ export const dishes: Dish[] = [
   {
     category: "tradicionales",
     name: "Tostadas de Huesito",
+    image: "/img/tostada.jpeg",
     unit: "pieza",
     description:
       "Carne de espinazo deshebrada sobre frijol, con repollo y salsa.",
@@ -106,6 +109,7 @@ export const dishes: Dish[] = [
   {
     category: "tradicionales",
     name: "Tostadas de Pata",
+    image: "/img/tostada_p.jpeg",
     unit: "pieza",
     description: "Pata de cerdo en vinagre con frijol, lechuga, crema y queso.",
     price: 35,
@@ -131,24 +135,68 @@ export const gallery: {
 }[] = [
   {
     id: "gal-1",
-    hint: "Platillo",
+    hint: "Chilaquiles con carne asada",
     src: "/img/platillo.jpg",
     className: "row-span-2",
   },
-  { id: "gal-2", hint: "Cocina: masa a mano", className: "" },
-  { id: "gal-3", hint: "Platillo: gorditas", className: "" },
+  {
+    id: "gal-2",
+    hint: "Sopes",
+    src: "/img/sopes.jpg",
+    className: "",
+  },
+  {
+    id: "gal-3",
+    hint: "Taco dorado",
+    src: "/img/taco_dorado.jpeg",
+    className: "",
+  },
   {
     id: "gal-4",
-    hint: "Fachada",
-    src: "/img/local.jpg",
-    className: "min-[560px]:col-span-2",
+    hint: "Pozole rojo",
+    src: "/img/pozole.jpeg",
+    className: "col-span-2",
   },
   {
     id: "gal-5",
-    hint: "Carta",
-    src: "/img/carta.jpg",
+    hint: "Chilaquiles",
+    src: "/img/chilaquiles.jpeg",
     className: "row-span-2",
   },
-  { id: "gal-6", hint: "Instalaciones: comedor", className: "" },
-  { id: "gal-7", hint: "Cocina: ollas y comal", className: "" },
+  {
+    id: "gal-6",
+    hint: "Tostadas surtidas",
+    src: "/img/tostadas_v.jpeg",
+    className: "",
+  },
+  {
+    id: "gal-7",
+    hint: "Pozole con tostadas",
+    src: "/img/pozole_v.jpeg",
+    className: "",
+  },
+  {
+    id: "gal-8",
+    hint: "Molletes con carne",
+    src: "/img/molletes.jpeg",
+    className: "",
+  },
+  {
+    id: "gal-9",
+    hint: "Pollo frito",
+    src: "/img/pollo_frito.jpeg",
+    className: "row-span-2",
+  },
+  {
+    id: "gal-10",
+    hint: "Torta ahogada",
+    src: "/img/torta.jpeg",
+    className: "col-span-2",
+  },
+  {
+    id: "gal-11",
+    hint: "Plátanos fritos",
+    src: "/img/platanitos.jpeg",
+    className: "",
+  },
 ];
