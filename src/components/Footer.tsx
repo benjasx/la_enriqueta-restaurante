@@ -1,4 +1,4 @@
-import { site, whatsappUrl } from "@/data/site";
+import { site } from "@/data/site";
 
 export const Footer = () => (
   <>
@@ -17,17 +17,5 @@ export const Footer = () => (
         </span>
       </div>
     </footer>
-    <a
-      href={whatsappUrl()}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Pedir por WhatsApp"
-      className="bg-green hover:bg-green-dark fixed right-5 bottom-5 z-[60] flex items-center gap-2.5 rounded-full py-3.5 pr-5 pl-4 text-[15px] font-semibold text-white shadow-[0_12px_28px_-10px_rgba(20,60,30,0.6)]"
-    >
-      <span className="grid size-[26px] place-items-center rounded-full bg-white">
-        <span className="size-2.5 rounded-full bg-[#2f9e48]" />
-      </span>
-      WhatsApp
-    </a>
   </>
 );
