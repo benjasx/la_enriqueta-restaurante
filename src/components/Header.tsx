@@ -40,7 +40,7 @@ export const Header = ({
         >
           <a href="#inicio" className="text-ink flex items-center gap-3">
             <img
-              src="/img/logo.jpg"
+              src="/img/logo.webp"
               alt={`${site.name} · ${site.tagline}`}
               className="block size-12 rounded-2xl object-cover"
             />

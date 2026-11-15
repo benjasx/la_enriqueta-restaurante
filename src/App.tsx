@@ -30,9 +30,9 @@ export const App = () => {
       <main>
         <Hero />
         <Menu />
+        <KaraokeBanner />
         <About />
         <Gallery />
-        <KaraokeBanner />
         <LocalBanner />
         <Contact />
       </main>

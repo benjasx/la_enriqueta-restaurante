@@ -103,7 +103,7 @@ export const Menu = () => {
               ref={tabsRef}
               role="tablist"
               onScroll={updateEdges}
-              className="bg-sand flex w-fit max-w-full scrollbar-none gap-1 overflow-x-auto rounded-full p-1.5 [&::-webkit-scrollbar]:hidden"
+              className="bg-sand flex w-fit max-w-full scrollbar-none gap-1 overflow-x-auto overflow-y-hidden overscroll-x-contain rounded-full p-1.5 [&::-webkit-scrollbar]:hidden"
             >
               {categories.map((c) => (
                 <button
@@ -133,7 +133,7 @@ export const Menu = () => {
           </div>
         </div>
 
-        <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 items-stretch gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 items-start gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-5 pt-2 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] sm:items-start sm:gap-5 sm:overflow-visible sm:px-0 sm:pt-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
           {visible.map((d, i) => {
             const label = priceLabel(d);
             const grouped = Boolean(d.wide);
@@ -155,7 +155,7 @@ export const Menu = () => {
                 <motion.article
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="rounded-card shadow-card flex h-full flex-col overflow-hidden bg-white transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(120,20,60,0.4)]"
+                  className="rounded-card shadow-card flex flex-col overflow-hidden bg-white transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(120,20,60,0.4)]"
                 >
                   {!grouped && (
                     <div className="relative aspect-[4/3]">

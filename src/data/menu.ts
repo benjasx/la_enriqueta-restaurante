@@ -63,13 +63,13 @@ export const priceLabel = (item: MenuItem) => {
 };
 
 // Todo el contenido del menú vive aquí: nombre, descripción, porción, precios,
-// notas e imagen (`image: "/img/archivo.jpg"`, opcional). Edita este arreglo y
+// notas e imagen (`image: "/img/archivo.webp"`, opcional). Edita este arreglo y
 // el sitio se actualiza solo. Fuente de referencia: specs/menu-la-enriqueta.md
 export const menu: MenuItem[] = [
   {
     id: "especial-la-enriqueta",
     category: "especialidades",
-    image: "/img/especial.jpeg",
+    image: "/img/especial.webp",
     name: "El Especial La Enriqueta",
     description:
       "¡Para los que quieren probarlo todo! 1 tostada, 1 taco dorado, 1 pieza de pollo dorada, 2 gorditas doradas o blanditas y una porción de papa dorada.",
@@ -78,7 +78,7 @@ export const menu: MenuItem[] = [
   {
     id: "torta-ahogada",
     category: "especialidades",
-    image: "/img/torta.jpeg",
+    image: "/img/torta.webp",
     name: "Torta Ahogada Estilo Tuxpan",
     description: "Torta ahogada bañada en salsa de jitomate.",
     unit: "1 pieza",
@@ -90,7 +90,7 @@ export const menu: MenuItem[] = [
   {
     id: "pollo-la-enriqueta",
     category: "especialidades",
-    image: "/img/pollo_enri.png",
+    image: "/img/pollo_enri.webp",
     name: "Pollo a La Enriqueta",
     description:
       "4 piezas de pollo dorado, acompañado con ensalada, papa dorada y arroz a la mexicana.",
@@ -99,7 +99,7 @@ export const menu: MenuItem[] = [
   {
     id: "bistec-mexicana",
     category: "fuertes",
-    image: "/img/bistec_mex.png",
+    image: "/img/bistec_mex.webp",
     name: "Bistec a la Mexicana",
     description:
       "Suave carne de res guisada con tomate, cebolla y chile verde. El sabor más tradicional de nuestra cocina.",
@@ -145,6 +145,7 @@ export const menu: MenuItem[] = [
   {
     id: "huevos-del-dia",
     category: "desayunos",
+    image: "/img/huevos.webp",
     name: "Los Huevos del Día",
     description:
       "Tradición en cada bocado, acompañados de chilaquiles rojos y frijoles refritos.",
@@ -169,6 +170,7 @@ export const menu: MenuItem[] = [
   {
     id: "molletes",
     category: "desayunos",
+    image: "/img/mollete.webp",
     name: "Molletes",
     description:
       "Pan de la casa (bolillo) tostado con mantequilla y frijoles, cubierto de queso fundido y salsa pico gallo.",
@@ -196,6 +198,7 @@ export const menu: MenuItem[] = [
   {
     id: "tamales",
     category: "desayunos",
+    image: "/img/tamal.webp",
     name: "Tamales Tradicionales",
     description: "Receta casera al vapor.",
     options: [
@@ -227,7 +230,7 @@ export const menu: MenuItem[] = [
   {
     id: "kids-sincronizadas",
     category: "kids",
-    image: "/img/sincronizada.png",
+    image: "/img/sincronizada.webp",
     name: "Sincronizadas Kids",
     description: "Del Menú Kids: tortilla de harina rellena de queso y jamón.",
     price: 60,
@@ -235,6 +238,7 @@ export const menu: MenuItem[] = [
   {
     id: "kids-burritos",
     category: "kids",
+    image: "/img/burritos.webp",
     name: "Burritos Kids",
     description: "Del Menú Kids.",
     price: 45,
@@ -242,6 +246,7 @@ export const menu: MenuItem[] = [
   {
     id: "kids-hot-cake",
     category: "kids",
+    image: "/img/hotcake.webp",
     name: "Hot cake Kids",
     description: "Del Menú Kids.",
     price: 35,
@@ -249,7 +254,7 @@ export const menu: MenuItem[] = [
   {
     id: "pozole",
     category: "tradicionales",
-    image: "/img/pozole.jpeg",
+    image: "/img/pozole.webp",
     name: "Pozole",
     description:
       "Caldito con maíz cacahuazintle, carnita de cerdo y pollo. Acompañado de lechuga o repollo, rábanos, pepino, cebolla, orégano y tostadas doradas.",
@@ -262,7 +267,7 @@ export const menu: MenuItem[] = [
   {
     id: "tostadas",
     category: "tradicionales",
-    image: "/img/tostada.jpeg",
+    image: "/img/tostada.webp",
     name: "Tostadas",
     description: "Crujientes, con tu ingrediente favorito.",
     unit: "1 pieza",
@@ -303,6 +308,7 @@ export const menu: MenuItem[] = [
   {
     id: "burritos",
     category: "entradas",
+    image: "/img/burritos.webp",
     name: "Burritos",
     description:
       "Tortillas de harina rellenas de pollo o pierna, acompañadas de verdura y salsa.",
@@ -315,7 +321,7 @@ export const menu: MenuItem[] = [
   {
     id: "quesadillas",
     category: "entradas",
-    image: "/img/quesadilla.png",
+    image: "/img/quesadilla.webp",
     name: "Quesadillas",
     description: "Clásica quesadilla de harina, acompáñala a tu gusto.",
     unit: "1 pieza",
@@ -345,7 +351,7 @@ export const menu: MenuItem[] = [
   {
     id: "rollitos-enriqueto",
     category: "entradas",
-    image: "/img/rollitos-enriqueto.png",
+    image: "/img/rollitos-enriqueto.webp",
     name: "Rollitos Enriqueto",
     description:
       "Tortillas de harina fritas, rellenas de queso, camarón y pimiento morrón.",
@@ -355,7 +361,7 @@ export const menu: MenuItem[] = [
   {
     id: "guacamole",
     category: "entradas",
-    image: "/img/guacamole.jpeg",
+    image: "/img/guacamole.webp",
     name: "Guacamole",
     description: "Aguacate machacado, sazonado y servido con pico de gallo.",
     unit: "orden",
@@ -364,7 +370,7 @@ export const menu: MenuItem[] = [
   {
     id: "tacos-dorados",
     category: "tradicionales",
-    image: "/img/taco_dorado.jpeg",
+    image: "/img/taco_dorado.webp",
     name: "Tacos Dorados",
     description: "La textura perfecta en cada bocado.",
     unit: "1 pieza",
@@ -382,7 +388,7 @@ export const menu: MenuItem[] = [
   {
     id: "sopes",
     category: "tradicionales",
-    image: "/img/sopes.jpg",
+    image: "/img/sopes.webp",
     name: "Sopes",
     description: "Sabrosos y tradicionales estilo Tuxpan.",
     unit: "1 pieza",
@@ -396,7 +402,7 @@ export const menu: MenuItem[] = [
   {
     id: "enchiladas",
     category: "tradicionales",
-    image: "/img/enchilada.png",
+    image: "/img/enchilada.webp",
     name: "Enchiladas",
     description:
       "Tortillas de maíz rellenas, bañadas en salsa roja de chile guajillo, con crema, queso fresco y cebolla.",
@@ -422,7 +428,7 @@ export const menu: MenuItem[] = [
   {
     id: "torta-tinga",
     category: "tradicionales",
-    image: "/img/torta_t.png",
+    image: "/img/torta_t.webp",
     name: "Torta de Tinga",
     description: "Torta de tinga.",
     price: 55,
@@ -430,7 +436,7 @@ export const menu: MenuItem[] = [
   {
     id: "pollo-dorado",
     category: "extras",
-    image: "/img/pollo_frito.jpeg",
+    image: "/img/pollo_frito.webp",
     name: "Pieza de Pollo Dorado",
     description:
       "Una pieza de pollo dorado acompañada con dos rodajas de papa dorada.",
@@ -465,7 +471,7 @@ export const menu: MenuItem[] = [
   {
     id: "tarta-elote",
     category: "postres",
-    image: "/img/tarta_elote.png",
+    image: "/img/tarta_elote.webp",
     name: "Tarta de elote",
     description: "Tarta de elote con nieve de vainilla.",
     price: 99,
@@ -473,7 +479,7 @@ export const menu: MenuItem[] = [
   {
     id: "brownie",
     category: "postres",
-    image: "/img/brownie.png",
+    image: "/img/brownie.webp",
     name: "Brownie",
     description: "Brownie con nieve de vainilla.",
     price: 99,
@@ -481,7 +487,7 @@ export const menu: MenuItem[] = [
   {
     id: "platanos-fritos",
     category: "postres",
-    image: "/img/platanitos.jpeg",
+    image: "/img/platanitos.webp",
     name: "Plátanos fritos",
     description: "Plátanos fritos.",
     price: 79,
@@ -489,7 +495,7 @@ export const menu: MenuItem[] = [
   {
     id: "jericallas",
     category: "postres",
-    image: "/img/jericalla.png",
+    image: "/img/jericalla.webp",
     name: "Jericallas",
     description: "Jericallas.",
     price: 55,
@@ -518,7 +524,7 @@ export const menu: MenuItem[] = [
   {
     id: "aguas-frescas",
     category: "bebidas",
-    image: "/img/agua.png",
+    image: "/img/agua.webp",
     name: "Aguas Frescas del día",
     description: "Aguas frescas preparadas cada día.",
     options: [
@@ -529,7 +535,7 @@ export const menu: MenuItem[] = [
   {
     id: "limonadas-naranjadas",
     category: "bebidas",
-    image: "/img/agua-fresca.jpg",
+    image: "/img/agua-fresca.webp",
 
     name: "Limonadas y Naranjadas",
     description: "Bebidas de la casa, naturales o minerales.",
@@ -538,7 +544,7 @@ export const menu: MenuItem[] = [
   {
     id: "bebidas-calientes",
     category: "bebidas",
-    image: "/img/champurrado.png",
+    image: "/img/champurrado.webp",
     name: "Bebidas Calientes",
     description: "Para acompañar tu comida.",
     options: [

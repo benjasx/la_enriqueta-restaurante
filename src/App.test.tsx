@@ -106,22 +106,18 @@ describe("App", () => {
     ).toHaveAccessibleName(/1 pieza, \$159/);
   });
 
-  it("shows the karaoke banner between the gallery and the local banner", () => {
+  it("shows the karaoke banner right after the menu", () => {
     render(<App />);
     const banner = screen.getByRole("region", { name: /viernes de karaoke/i });
     const img = within(banner).getByRole("img", {
       name: /viernes de karaoke/i,
     });
-    expect(img).toHaveAttribute("src", "/img/karaoke.jpg");
+    expect(img).toHaveAttribute("src", "/img/karaoke.webp");
     expect(banner.querySelector("a, button")).toBeNull();
 
-    const gallery = document.getElementById("galeria") as HTMLElement;
-    const local = screen.getByRole("heading", {
-      level: 2,
-      name: /aquí te esperamos, en tepic/i,
-    });
+    const menu = document.getElementById("menu") as HTMLElement;
     const after = Node.DOCUMENT_POSITION_FOLLOWING;
-    expect(gallery.compareDocumentPosition(banner) & after).toBeTruthy();
-    expect(banner.compareDocumentPosition(local) & after).toBeTruthy();
+    expect(menu.compareDocumentPosition(banner) & after).toBeTruthy();
+    expect(banner.previousElementSibling).toBe(menu);
   });
 });

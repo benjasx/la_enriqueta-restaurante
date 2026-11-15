@@ -11,7 +11,7 @@ export const About = () => (
     <div className="bg-wine text-cream mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] items-center gap-[clamp(32px,6vw,72px)] rounded-[clamp(28px,4vw,48px)] p-[clamp(24px,5vw,64px)]">
       <div className="relative aspect-[4/5] max-h-[560px] overflow-hidden rounded-[200px_200px_24px_24px] shadow-[0_0_0_8px_#C99A2E]">
         <Photo
-          src="/img/carta.jpg"
+          src="/img/carta.webp"
           hint="Foto: la cocina o la familia"
           alt="Carta de La Enriqueta"
         />

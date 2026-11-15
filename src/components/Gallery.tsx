@@ -1,14 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import files from "virtual:gallery-images";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
-import { gallery } from "@/data/site";
+
+const gallery = files.map((file) => ({
+  id: file,
+  src: `/img/${file}`,
+  hint: file
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_-]+/g, " ")
+    .trim(),
+}));
+
+const shuffle = <T,>(items: T[]) => {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
 
 export const Gallery = () => {
   const [selected, setSelected] = useState<(typeof gallery)[number] | null>(
     null,
   );
 
-  const slides = gallery.filter((g) => g.src);
+  const [slides] = useState(() => shuffle(gallery));
   const trackRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
@@ -101,7 +119,7 @@ export const Gallery = () => {
             onScroll={onScroll}
             aria-roledescription="carrusel"
             aria-label="Galería de platillos"
-            className="flex snap-x snap-mandatory items-center gap-4 overflow-x-auto scroll-smooth px-[10%] py-8 sm:px-[calc(50%-230px)] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory items-center gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth px-[10%] py-8 sm:px-[calc(50%-230px)] [&::-webkit-scrollbar]:hidden"
           >
             {slides.map((g, i) => (
               <div
@@ -125,11 +143,6 @@ export const Gallery = () => {
                 >
                   <Photo src={g.src} hint={g.hint} />
                 </button>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-16 pb-5">
-                  <span className="font-display text-xl font-semibold text-white">
-                    {g.hint}
-                  </span>
-                </div>
               </div>
             ))}
           </div>

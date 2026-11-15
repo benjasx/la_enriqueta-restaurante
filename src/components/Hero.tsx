@@ -45,7 +45,7 @@ export const Hero = () => (
     >
       <div className="absolute inset-0 [&_img]:object-[70%_50%] [&_img]:saturate-[1.2]">
         <Photo
-          src="/img/tostada_v.jpeg"
+          src="/img/tostada_v.webp"
           hint="Foto: tostada de La Enriqueta"
           alt="Tostada de La Enriqueta"
         />
