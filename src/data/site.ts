@@ -6,6 +6,23 @@ export const site = {
   phone: "523115130988",
   phoneLabel: "311 513 0988",
   whatsapp: "523111397571",
+  socials: [
+    {
+      id: "facebook",
+      label: "Facebook",
+      url: "https://www.facebook.com/share/1A2s9vUFCV/",
+    },
+    {
+      id: "instagram",
+      label: "Instagram",
+      url: "https://www.instagram.com/laenriquetaantojitostuxpenos",
+    },
+    {
+      id: "tiktok",
+      label: "TikTok",
+      url: "https://www.tiktok.com/@laenriquetatepic",
+    },
+  ],
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=C.%20Brasil%20261%2C%20Moctezuma%2C%20Tepic%2C%20Nayarit&z=16&output=embed",
   hours: [
