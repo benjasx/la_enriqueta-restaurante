@@ -63,6 +63,7 @@ export const menu: MenuItem[] = [
   {
     id: "especial-la-enriqueta",
     category: "especialidades",
+    image: "/img/especial.jpeg",
     name: "El Especial La Enriqueta",
     description:
       "¡Para los que quieren probarlo todo! 1 tostada, 1 taco dorado, 1 pieza de pollo dorada, 2 gorditas doradas o blanditas y una porción de papa dorada.",
@@ -83,7 +84,7 @@ export const menu: MenuItem[] = [
   {
     id: "pollo-la-enriqueta",
     category: "especialidades",
-    image: "/img/pollo_frito.jpeg",
+    image: "/img/pollo_enri.png",
     name: "Pollo a La Enriqueta",
     description:
       "4 piezas de pollo dorado, acompañado con ensalada, papa dorada y arroz a la mexicana.",
@@ -145,6 +146,7 @@ export const menu: MenuItem[] = [
   {
     id: "quesadillas",
     category: "entradas",
+    image: "/img/quesadilla.png",
     name: "Quesadillas",
     description: "Clásica quesadilla de harina, acompáñala a tu gusto.",
     unit: "1 pieza",
@@ -158,6 +160,7 @@ export const menu: MenuItem[] = [
   {
     id: "rollitos-enriqueto",
     category: "entradas",
+    image: "/img/rollitos-enriqueto.png",
     name: "Rollitos Enriqueto",
     description:
       "Tortillas de harina fritas, rellenas de queso, camarón y pimiento morrón.",
@@ -203,6 +206,7 @@ export const menu: MenuItem[] = [
   {
     id: "enchiladas",
     category: "tradicionales",
+    image: "/img/enchilada.png",
     name: "Enchiladas",
     description:
       "Tortillas de maíz rellenas, bañadas en salsa roja de chile guajillo, con crema, queso fresco y cebolla.",
@@ -308,6 +312,7 @@ export const menu: MenuItem[] = [
   {
     id: "aguas-frescas",
     category: "bebidas",
+    image: "/img/agua.png",
     name: "Aguas Frescas del día",
     description: "Aguas frescas preparadas cada día.",
     options: [
@@ -318,6 +323,8 @@ export const menu: MenuItem[] = [
   {
     id: "limonadas-naranjadas",
     category: "bebidas",
+    image: "/img/agua-fresca.jpg",
+
     name: "Limonadas y Naranjadas",
     description: "Bebidas de la casa, naturales o minerales.",
     price: 60,
@@ -325,6 +332,7 @@ export const menu: MenuItem[] = [
   {
     id: "bebidas-calientes",
     category: "bebidas",
+    image: "/img/champurrado.png",
     name: "Bebidas Calientes",
     description: "Para acompañar tu comida.",
     options: [

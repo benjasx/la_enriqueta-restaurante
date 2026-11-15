@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Photo } from "@/components/Photo";
-import { site, whatsappUrl } from "@/data/site";
+import { site } from "@/data/site";
 
 const enter = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -89,17 +89,6 @@ export const Hero = () => (
             className="bg-wine hover:bg-wine-light rounded-full px-8 py-4 text-base font-semibold text-white"
           >
             Ver Menú Digital
-          </motion.a>
-          <motion.a
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            href={whatsappUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-cream text-ink hover:text-green flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold hover:bg-white"
-          >
-            <span className="size-[9px] rounded-full bg-[#2f9e48]" />
-            Contactar por WhatsApp
           </motion.a>
         </motion.div>
         <motion.p

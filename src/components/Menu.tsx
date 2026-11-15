@@ -1,5 +1,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
+import type { Size } from "@/cart/cartReducer";
+import { useCart } from "@/cart/useCart";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import {
@@ -10,14 +12,13 @@ import {
   money,
   priceLabel,
   type CategoryId,
-  type PriceOption,
 } from "@/data/menu";
-import { whatsappUrl } from "@/data/site";
 
 const mono =
   "font-sans text-[10px] font-medium text-muted tracking-[0.08em] uppercase";
 
 export const Menu = () => {
+  const { dispatch } = useCart();
   const [cat, setCat] = useState<CategoryId>("especialidades");
   const visible = menu.filter((d) => d.category === cat);
   const count = (id: CategoryId) =>
@@ -81,14 +82,14 @@ export const Menu = () => {
         <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-5">
           {visible.map((d, i) => {
             const label = priceLabel(d);
-            const unit = d.unit ? ` (${d.unit})` : "";
             const grouped = Boolean(d.wide);
             const rows = d.options;
             const dual = rows?.some((r) => r.bottlePrice !== undefined);
-            const sizeMessage = (r: PriceOption, size: string, price: number) =>
-              `¡Hola La Enriqueta! Quiero ordenar: ${d.name} – ${r.label} (${size}) – ${money(price)} MXN`;
-            const rowMessage = (r: PriceOption) =>
-              `¡Hola La Enriqueta! Quiero ordenar: ${d.name} – ${r.label}${unit} – ${money(r.price)} MXN`;
+            const add = (optionLabel?: string, size?: Size) =>
+              dispatch({
+                type: "add",
+                line: { itemId: d.id, optionLabel, size },
+              });
             return (
               <Reveal
                 key={d.id}
@@ -153,31 +154,34 @@ export const Menu = () => {
                                 ).map(
                                   ([size, price]) =>
                                     price !== undefined && (
-                                      <a
+                                      <button
                                         key={size}
-                                        href={whatsappUrl(
-                                          sizeMessage(r, size, price),
-                                        )}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="border-green text-green hover:bg-green hover:text-cream flex min-h-9 items-center gap-1.5 rounded-full border-[1.5px] px-3 text-[12.5px] font-semibold whitespace-nowrap"
+                                        type="button"
+                                        aria-label={`Agregar ${d.name} ${r.label} ${size}`}
+                                        onClick={() =>
+                                          add(
+                                            r.label,
+                                            size.toLowerCase() as Size,
+                                          )
+                                        }
+                                        className="border-green text-green hover:bg-green hover:text-cream flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border-[1.5px] bg-transparent px-3 text-[12.5px] font-semibold whitespace-nowrap"
                                       >
                                         {size}
                                         <span className="font-display font-bold tabular-nums">
                                           {money(price)}
                                         </span>
-                                      </a>
+                                      </button>
                                     ),
                                 )}
                               </span>
                             </li>
                           ) : (
                             <li key={r.label}>
-                              <a
-                                href={whatsappUrl(rowMessage(r))}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-ink hover:text-green flex min-h-11 items-center justify-between gap-3 border-b border-dashed border-[#e3cfc0] text-[15px]"
+                              <button
+                                type="button"
+                                aria-label={`Agregar ${d.name} ${r.label}`}
+                                onClick={() => add(r.label)}
+                                className="text-ink hover:text-green flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 border-0 border-b border-dashed border-[#e3cfc0] bg-transparent p-0 text-left text-[15px]"
                               >
                                 <span className="min-w-0 py-1.5">
                                   <span className="block">{r.label}</span>
@@ -192,10 +196,10 @@ export const Menu = () => {
                                     {money(r.price)}
                                   </span>
                                   <span className="text-green w-12 text-right font-sans text-[11px] font-semibold">
-                                    Pedir →
+                                    Agregar +
                                   </span>
                                 </span>
-                              </a>
+                              </button>
                             </li>
                           ),
                         )}
@@ -203,17 +207,15 @@ export const Menu = () => {
                     )}
                     <div className="flex-1" />
                     {!rows && (
-                      <a
-                        href={whatsappUrl(
-                          `¡Hola La Enriqueta! Quiero ordenar: ${d.name}${unit} – ${label} MXN`,
-                        )}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-green text-green hover:bg-green hover:text-cream mt-1.5 flex min-h-11 items-center justify-center gap-2 rounded-full border-[1.5px] text-sm font-semibold"
+                      <button
+                        type="button"
+                        aria-label={`Agregar ${d.name}`}
+                        onClick={() => add()}
+                        className="border-green text-green hover:bg-green hover:text-cream mt-1.5 flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-full border-[1.5px] bg-transparent text-sm font-semibold"
                       >
                         <span className="size-[7px] rounded-full bg-current" />
-                        Ordenar por WhatsApp
-                      </a>
+                        Agregar al pedido
+                      </button>
                     )}
                   </div>
                 </motion.article>

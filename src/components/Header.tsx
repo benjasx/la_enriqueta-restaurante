@@ -1,6 +1,8 @@
 import { useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
-import { site, whatsappUrl } from "@/data/site";
+import type { Ref } from "react";
+import { CartButton } from "@/components/CartButton";
+import { site } from "@/data/site";
 
 const links = [
   { label: "Inicio", href: "#inicio" },
@@ -11,7 +13,13 @@ const links = [
   { label: "Contacto", href: "#contacto" },
 ];
 
-export const Header = () => {
+export const Header = ({
+  onOpenCart,
+  cartButtonRef,
+}: {
+  onOpenCart: () => void;
+  cartButtonRef?: Ref<HTMLButtonElement>;
+}) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const { scrollY } = useScroll();
@@ -55,27 +63,21 @@ export const Header = () => {
                 {l.label}
               </a>
             ))}
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green hover:bg-green-dark text-cream flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold"
-            >
-              <span className="size-2 rounded-full bg-[#8ee29b]" />
-              Pedir por WhatsApp
-            </a>
           </div>
-          <button
-            type="button"
-            aria-label="Abrir menú"
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-            className="bg-sand flex size-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full min-[1100px]:hidden"
-          >
-            <span className="bg-ink h-0.5 w-5 rounded-sm" />
-            <span className="bg-ink h-0.5 w-5 rounded-sm" />
-            <span className="bg-ink h-0.5 w-3.5 rounded-sm" />
-          </button>
+          <div className="flex items-center gap-2">
+            <CartButton ref={cartButtonRef} onOpen={onOpenCart} />
+            <button
+              type="button"
+              aria-label="Abrir menú"
+              aria-expanded={open}
+              onClick={() => setOpen((o) => !o)}
+              className="bg-sand flex size-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full min-[1100px]:hidden"
+            >
+              <span className="bg-ink h-0.5 w-5 rounded-sm" />
+              <span className="bg-ink h-0.5 w-5 rounded-sm" />
+              <span className="bg-ink h-0.5 w-3.5 rounded-sm" />
+            </button>
+          </div>
         </nav>
         {open && (
           <div className="border-line flex flex-col gap-0.5 border-t px-4 pt-2 pb-4 min-[1100px]:hidden">
@@ -89,14 +91,6 @@ export const Header = () => {
                 {l.label}
               </a>
             ))}
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green text-cream mt-3 rounded-full p-3.5 text-center font-semibold"
-            >
-              Pedir por WhatsApp
-            </a>
           </div>
         )}
       </div>

@@ -1,8 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { App } from "@/App";
 
 describe("App", () => {
+  beforeEach(() => window.localStorage.clear());
+
   it("renders the restaurant name and main sections", () => {
     render(<App />);
     expect(
@@ -40,18 +42,51 @@ describe("App", () => {
     expect(total).toBe(40);
   });
 
-  it("orders liquor by glass or bottle with the exact price", async () => {
+  it("adds liquor by glass or bottle to the cart with the exact price", async () => {
     render(<App />);
     await userEvent.click(
       screen.getByRole("tab", { name: /licores y vinos/i }),
     );
-    const glass = screen.getByRole("link", { name: /copeo\s*\$170/i });
-    const bottle = screen.getByRole("link", { name: /botella\s*\$2,499/i });
-    expect(decodeURIComponent(glass.getAttribute("href") ?? "")).toContain(
-      "Whisky – Black Label (Copeo) – $170 MXN",
+    await userEvent.click(
+      screen.getByRole("button", { name: /agregar whisky black label copeo/i }),
     );
-    expect(decodeURIComponent(bottle.getAttribute("href") ?? "")).toContain(
-      "Whisky – Black Label (Botella) – $2,499 MXN",
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /agregar whisky black label botella/i,
+      }),
     );
+    expect(
+      screen.getByRole("button", { name: /ver pedido/i }),
+    ).toHaveAccessibleName(/2 piezas, \$2,669/);
+    expect(document.querySelector('#menu a[href^="https://wa.me"]')).toBeNull();
+  });
+
+  it("merges repeated adds into one cart line and sends the whole order", async () => {
+    window.localStorage.setItem(
+      "enriqueta:customer:v1",
+      JSON.stringify({
+        name: "Ana Pérez",
+        phone: "3111234567",
+        mode: "recoger",
+        address: "",
+        mapsLink: "",
+      }),
+    );
+    render(<App />);
+    await userEvent.click(
+      screen.getByRole("tab", { name: /antojitos tradicionales/i }),
+    );
+    const add = screen.getByRole("button", { name: /agregar pozole mediano/i });
+    await userEvent.click(add);
+    await userEvent.click(add);
+    await userEvent.click(screen.getByRole("button", { name: /ver pedido/i }));
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toHaveTextContent("$260");
+    expect(within(dialog).getAllByRole("listitem")).toHaveLength(1);
+    const href =
+      screen
+        .getByRole("link", { name: /enviar pedido/i })
+        .getAttribute("href") ?? "";
+    expect(decodeURIComponent(href)).toContain("- 2 × Pozole – Mediano");
   });
 });

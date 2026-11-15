@@ -9,7 +9,11 @@ export const site = {
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=C.%20Brasil%20261%2C%20Moctezuma%2C%20Tepic%2C%20Nayarit&z=16&output=embed",
   hours: [
-    { days: "Martes a Domingo", time: "8:00 – 17:00", open: true },
+    {
+      days: "Abrimos todos los días de",
+      time: "8:00 am – 10:30 pm",
+      open: true,
+    },
     { days: "Lunes", time: "Cerrado", open: false },
   ],
 };
