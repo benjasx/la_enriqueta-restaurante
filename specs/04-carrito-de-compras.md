@@ -3,11 +3,13 @@
 > **Estado:** Aprobado
 > **Depende de:** SPEC 03
 > **Fecha:** 2026-11-15
-> **Objetivo:** Permitir agregar productos del menú a un carrito (botón en la barra de navegación y panel con cantidades, nota, datos del cliente y total) y enviar todo el pedido, con los datos de entrega, en un solo mensaje de WhatsApp.
+> **Objetivo:** Permitir agregar productos del menú a un carrito (botón en la barra de navegación y panel con cantidades, nota, datos del cliente y total) y enviar todo el pedido, con los datos de entrega, en un solo mensaje de WhatsApp, y completar el menú con los platillos de las cartas nuevas.
 
 ## Por qué existe esta spec
 
 Hoy cada fila del menú abre WhatsApp con un solo producto (SPEC 03). Pedir una comida completa obliga a abrir WhatsApp una vez por producto. Esta spec **revoca** el flujo "una fila = un mensaje" de la SPEC 03 y lo sustituye por un carrito con un único envío. También **revoca** la exclusión de la SPEC 03 que dejaba fuera "carrito o pedido en línea" y la restricción de "sin animaciones nuevas" solo para el panel del carrito y el feedback al agregar.
+
+Durante la implementación llegaron fotos de tres cartas nuevas (`public/img/mn_01.jpeg`, `mn_02.jpeg`, `mn_03.jpeg`) y la promoción de tamales. El usuario pidió incluir esos platillos en esta spec: **amplía** el menú de la SPEC 03 (que seguía siendo la fuente de datos) con 17 tarjetas y 3 categorías nuevas, y **corrige** un precio existente (café de olla).
 
 ## Alcance
 
@@ -26,6 +28,7 @@ Hoy cada fila del menú abre WhatsApp con un solo producto (SPEC 03). Pedir una 
 - Ubicación de Google Maps: botón "Usar mi ubicación" (geolocalización del navegador) o campo para pegar un enlace de Google Maps o coordenadas `lat, lng`; se envía al repartidor como enlace clicable.
 - Los datos del cliente se guardan en `localStorage` (`enriqueta:customer:v1`) con un aviso de que quedan solo en su dispositivo.
 - Tests del reducer, de la persistencia, de la validación de datos y del flujo agregar → enviar.
+- Ampliación del menú (`src/data/menu.ts`) con los platillos de las cartas nuevas y de la promoción de tamales, en 3 categorías nuevas (Platos Fuertes, Desayunos y Molletes, Menú Kids) y en las existentes. Detalle en "Modelo de datos".
 
 **Fuera de alcance (para specs futuras):**
 
@@ -35,7 +38,7 @@ Hoy cada fila del menú abre WhatsApp con un solo producto (SPEC 03). Pedir una 
 - Costo de envío, zonas de reparto, propinas, cupones o impuestos.
 - Horario de atención: el carrito no bloquea el envío fuera de horario.
 - Toasts para otros eventos (quitar, vaciar, enviar), sonido o vibración.
-- Cambios en `About`, `Gallery`, `Contact`, `Footer`, en `site` o en los precios y descripciones de `src/data/menu.ts`; en `Header` y `Hero` solo lo descrito en "Dentro".
+- Cambios en `About`, `Gallery`, `Contact`, `Footer`, en `site` o en los precios existentes de `src/data/menu.ts` (salvo el café de olla); en `Header` y `Hero` solo lo descrito en "Dentro".
 - Cambiar el texto del subtítulo del menú ("pídelo directo por WhatsApp").
 
 ## Modelo de datos
@@ -121,6 +124,20 @@ Ubicación: https://www.google.com/maps?q=21.504100,-104.894500
 - El bloque de cliente va después de una línea en blanco. Con `"recoger"`: `Entrega: Recoger en el local` y sin `Domicilio:` ni `Ubicación:`. `Ubicación:` solo aparece si hay ubicación válida. El teléfono se escribe como `NNN NNN NNNN`.
 - `money` de `src/data/menu.ts` formatea todos los importes.
 
+Ampliación del menú (`src/data/menu.ts`). `CategoryId` suma `"fuertes" | "desayunos" | "kids"` y `categories` pasa de 8 a 11 pestañas, en este orden: Especialidades de la Casa, Antojitos Tradicionales, Entradas, **Platos Fuertes**, **Desayunos y Molletes**, Para Acompañar y Extras, **Menú Kids**, Postres, Bebidas, Coctelería y Cervezas, Licores y Vinos. Los tipos `MenuItem` y `PriceOption` no cambian.
+
+| Categoría (`id`)                          | Producto nuevo o cambio                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platos Fuertes (`fuertes`)                | Bistec a la Mexicana $155, Tasajo de Arrachera $180, Hígado Encebollado $135, Chicharrón en Salsa Roja $155, Chuletas Ahumadas $135. Nota en cada uno: chilaquiles rojos y frijolitos refritos; café americano (250 ml) por $35 adicionales                                                                                                                                                                                                  |
+| Desayunos y Molletes (`desayunos`)        | Los Huevos del Día (A la Mexicana $110; Al gusto con jamón de pavo o salchicha $120; Al gusto con tocino crujiente o chorizo casero $130), Molletes (carne asada $75, chorizo $65, dulces $45), Tamales Tradicionales (pollo con salsa verde $50, cerdo con adobo especial $50), Promociones de Tamales (tarjeta ancha: Tamal + Café con refill $85, Tamal + Champurrado $85, Desayuno para 2 $159, Tamal + Empanada dulce de requesón $119) |
+| Menú Kids (`kids`)                        | Sincronizadas Kids $60, Burritos Kids $45, Hot cake Kids $35                                                                                                                                                                                                                                                                                                                                                                                 |
+| Entradas (`entradas`)                     | Gorditas: opciones nuevas Camarón seco molido $80 y Picadillo mixto $85. Producto nuevo Quesadilla de Maíz con un relleno a elegir, todos a $85: Naturales, Pollo, Pierna, Picadillo, Asada, Chorizo y Camarón                                                                                                                                                                                                                               |
+| Antojitos Tradicionales (`tradicionales`) | Tostadas: opciones nuevas Carnitas $55 y Tinga de pollo $55. Tacos Dorados: opciones nuevas Camarón seco, Camarón fresco, Picadillo y Demolida a $75, y Chanfaina $60. Producto nuevo Torta de Tinga $55                                                                                                                                                                                                                                     |
+| Postres (`postres`)                       | Empanadas de requesón dulce $45                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Bebidas (`bebidas`)                       | Bebidas Calientes: "Café americano o de olla" $35 pasa a Café de olla $40 y Café americano $35. Productos nuevos Refrescos $40 y Jugo de naranja $60                                                                                                                                                                                                                                                                                         |
+
+Total: 57 tarjetas (antes 40): 17 nuevas con 5 de Platos Fuertes, 4 de Desayunos y Molletes, 3 de Kids, 1 de Quesadilla de Maíz, 1 de Torta de Tinga, 1 de Empanadas, 2 de Bebidas. Los ids son únicos y en kebab-case (`bistec-mexicana`, `promociones-tamales`, `kids-hot-cake`, …). Las cartas son la fuente de los precios; los productos nuevos no llevan foto.
+
 Archivos que aparecen o cambian:
 
 | Archivo                           | Cambio                                                                 |
@@ -155,6 +172,8 @@ Archivos que aparecen o cambian:
 13. Crear `CustomerForm.tsx` (selector Domicilio/Recoger, nombre, teléfono, domicilio, ubicación con "Usar mi ubicación" y campo de pegado, aviso de privacidad), montarlo en el área desplazable de `CartPanel.tsx` antes de la nota y deshabilitar "Enviar pedido por WhatsApp" mientras falten datos, indicando qué falta. Verificar: `npm test`; el botón se habilita solo con datos válidos.
 14. Ajustar los tests existentes del envío (`Cart.test.tsx`, `App.test.tsx`) para precargar datos del cliente. Verificar: `npm test`.
 15. Mover el botón del carrito a `Header.tsx` (sustituye a "Pedir por WhatsApp" en escritorio y en el menú móvil, y se elimina el flotante de `App.tsx`), reubicar el toast bajo la barra, quitar "Contactar por WhatsApp" de `Hero.tsx` y ajustar los tests. Verificar: `npm test`; `npm run dev` a 375 px y 1280 px.
+16. Ampliar `src/data/menu.ts`: tipos de categoría, `categories` (11 pestañas) y los 17 productos nuevos más los cambios en Gorditas, Tostadas, Tacos Dorados y Bebidas Calientes, según la tabla del modelo de datos. Verificar: `npm run typecheck`; cada pestaña muestra sus tarjetas con el precio exacto.
+17. Ajustar `src/App.test.tsx` (11 pestañas, 7 tarjetas en Antojitos Tradicionales, 57 en total) y probar que un combo nuevo entra al carrito con su precio. Verificar: `npm test`.
 
 ## Criterios de aceptación
 
@@ -191,6 +210,14 @@ Archivos que aparecen o cambian:
 - [ ] El panel se cierra con ×, clic en el fondo y `Esc`, y el foco vuelve al botón del carrito de la barra de navegación.
 - [ ] A 375 px no hay scroll horizontal de la página y el botón del carrito y el nombre del restaurante caben en la barra de navegación sin superponerse.
 - [ ] Con `prefers-reduced-motion: reduce` el panel aparece y desaparece sin animación.
+- [ ] El menú muestra 11 pestañas en el orden del modelo de datos, abre en "Especialidades de la Casa" y suma 57 tarjetas; Antojitos Tradicionales tiene 7.
+- [ ] Platos Fuertes tiene 5 tarjetas con $155, $180, $135, $155 y $135, y cada una muestra la nota de chilaquiles, frijolitos y café americano por $35 adicionales.
+- [ ] Desayunos y Molletes tiene 4 tarjetas: Huevos ($110, $120, $130), Molletes ($75, $65, $45), Tamales ($50 y $50) y Promociones de Tamales ($85, $85, $159, $119).
+- [ ] Menú Kids muestra Sincronizadas Kids $60, Burritos Kids $45 y Hot cake Kids $35.
+- [ ] Bebidas Calientes muestra Café de olla $40 y Café americano $35 por separado; existen Refrescos $40 y Jugo de naranja $60.
+- [ ] Gorditas tiene Camarón seco molido $80 y Picadillo mixto $85; Tostadas, Carnitas y Tinga de pollo a $55; Tacos Dorados, Camarón seco, Camarón fresco, Picadillo y Demolida a $75 y Chanfaina a $60.
+- [ ] Quesadilla de Maíz muestra 7 filas de $85 (Naturales, Pollo, Pierna, Picadillo, Asada, Chorizo y Camarón), cada una agrega un solo relleno al carrito, y no hay nota de rellenos. Existen también Torta de Tinga $55 y Empanadas de requesón dulce $45.
+- [ ] Cada producto nuevo se puede agregar al carrito y el mensaje de WhatsApp trae su nombre, variedad y precio exacto; ningún `id` del menú se repite.
 - [ ] No hay dependencias nuevas en `package.json` y los colores de `@theme` conservan sus valores.
 
 ## Decisiones
@@ -222,29 +249,42 @@ Archivos que aparecen o cambian:
 - **Sí:** un solo toast que se reinicia al agregar de nuevo. Evita apilar avisos al pulsar varias veces.
 - **Sí:** `lastAdded` en el estado del carrito, sin persistirlo. Derivarlo de la acción mantiene el reducer puro y testeable.
 - **Sí:** aviso +18 en el panel cuando hay alcohol, sin bloquear el envío. El negocio valida la edad en WhatsApp; la nota "Aplican restricciones" de los tragos clásicos se mantiene.
+- **Sí:** incluir la ampliación del menú en esta spec, por pedido del usuario, aunque no sea del carrito. Los datos son los de la SPEC 03; esa spec no se reabre y esta documenta lo que cambia.
+- **Sí:** tres categorías nuevas (`fuertes`, `desayunos`, `kids`). Los platos fuertes y los desayunos no encajan en las 8 existentes; Kids es una sección propia de la carta.
+- **Sí:** Promociones de Tamales como tarjeta ancha dentro de Desayunos y Molletes, no como pestaña. Son combos de desayuno y una pestaña más llegaría a 12; cada combo es una opción con su precio y su contenido en la descripción.
+- **Sí:** Menú Kids como productos propios (`kids-*`), con "Kids" en el nombre. Tienen precio y porción distintos de los normales (Burritos Kids $45 contra Burritos desde $40) y así el carrito y el mensaje de WhatsApp no los confunden.
+- **Sí:** separar Café de olla $40 y Café americano $35. La carta nueva los distingue; antes iban juntos a $35.
+- **Sí:** los rellenos de la Quesadilla de Maíz como filas de `options` a $85 en lugar de una `note`. Cada fila es un botón que agrega un solo relleno (un solo relleno por quesadilla); se cambia la decisión inicial de dejarlos como texto, a pedido del usuario.
+- **Sí:** repetir en cada Plato Fuerte la nota de chilaquiles, frijolitos y café americano por $35 adicionales. No existe una nota por categoría y crearla amplía el alcance.
+- **Sí:** leer "picadillo, demolida" de la carta de tacos dorados como dos variedades (Picadillo y Demolida). Pendiente de confirmar con el cliente.
+- **No:** fotos nuevas. `mn_01` a `mn_03` son capturas de la carta, no fotos de los platillos; los productos nuevos usan el placeholder de `Photo`.
 - **Sí:** máximo 20 por línea. Evita cantidades absurdas por toques repetidos; si hace falta más, se aclara en la nota.
 - **Sí:** enviar no vacía el carrito. Abrir WhatsApp no confirma que el mensaje se mandó; "Vaciar pedido" es explícito.
 
 ## Riesgos
 
-| Riesgo                                                                              | Mitigación                                                                                                  |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Carrito guardado con productos que ya no existen o cambiaron                        | No se guardan precios; se descartan líneas inválidas al cargar.                                             |
-| `localStorage` deshabilitado (modo privado)                                         | Respaldo en memoria; el carrito funciona sin persistir.                                                     |
-| URL de WhatsApp demasiado larga con pedidos muy grandes                             | Límite de 20 por línea y 300 caracteres de nota; el paso 6 se prueba con un pedido de 10 líneas.            |
-| El botón del carrito no cabe en la barra de navegación a 375 px                     | En móvil solo icono y contador (sin texto ni total); se revisa en el paso 15.                               |
-| Foco atrapado o perdido al abrir y cerrar el panel                                  | Panel con `role="dialog"` y `aria-modal`, foco inicial dentro y retorno al botón del carrito al cerrar.     |
-| Datos personales (nombre, teléfono, domicilio, ubicación) guardados en el navegador | Solo en `localStorage` del dispositivo, sin backend; aviso visible en el panel; no se registran en consola. |
-| Geolocalización negada, imprecisa o no disponible (HTTP, navegador sin soporte)     | Mensaje con el motivo y campo de pegado como alternativa; el domicilio escrito sigue siendo obligatorio.    |
-| Enlace de ubicación malicioso o ilegible para el repartidor                         | Lista cerrada de dominios de Google Maps y normalización de coordenadas.                                    |
-| Pedido con alcohol a menores                                                        | Aviso +18 en el panel; la validación real queda en la conversación de WhatsApp.                             |
-| `App.test.tsx` depende de los textos de los botones                                 | El paso 8 lo ajusta al nuevo flujo.                                                                         |
+| Riesgo                                                                                  | Mitigación                                                                                                          |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Carrito guardado con productos que ya no existen o cambiaron                            | No se guardan precios; se descartan líneas inválidas al cargar.                                                     |
+| `localStorage` deshabilitado (modo privado)                                             | Respaldo en memoria; el carrito funciona sin persistir.                                                             |
+| URL de WhatsApp demasiado larga con pedidos muy grandes                                 | Límite de 20 por línea y 300 caracteres de nota; el paso 6 se prueba con un pedido de 10 líneas.                    |
+| El botón del carrito no cabe en la barra de navegación a 375 px                         | En móvil solo icono y contador (sin texto ni total); se revisa en el paso 15.                                       |
+| Foco atrapado o perdido al abrir y cerrar el panel                                      | Panel con `role="dialog"` y `aria-modal`, foco inicial dentro y retorno al botón del carrito al cerrar.             |
+| Datos personales (nombre, teléfono, domicilio, ubicación) guardados en el navegador     | Solo en `localStorage` del dispositivo, sin backend; aviso visible en el panel; no se registran en consola.         |
+| Geolocalización negada, imprecisa o no disponible (HTTP, navegador sin soporte)         | Mensaje con el motivo y campo de pegado como alternativa; el domicilio escrito sigue siendo obligatorio.            |
+| Enlace de ubicación malicioso o ilegible para el repartidor                             | Lista cerrada de dominios de Google Maps y normalización de coordenadas.                                            |
+| Errores de captura de los precios leídos de fotos de la carta                           | Los criterios verifican precios clave; se revisa `menu.ts` contra las cartas antes de dar la spec por implementada. |
+| 11 pestañas no caben en móvil                                                           | La barra ya hace scroll horizontal y muestra la pestaña activa.                                                     |
+| Lecturas dudosas de la carta ("picadillo, demolida"; si la nota "por $35" es adicional) | Quedan en las decisiones; se ajustan cuando el cliente responda.                                                    |
+| Pedido con alcohol a menores                                                            | Aviso +18 en el panel; la validación real queda en la conversación de WhatsApp.                                     |
+| `App.test.tsx` depende de los textos de los botones                                     | El paso 8 lo ajusta al nuevo flujo.                                                                                 |
 
 ## Qué **no** entra en esta spec
 
 - Pago en línea, backend, cuentas e historial de pedidos.
 - Pago, costo de envío, zonas de reparto, propinas y cupones.
 - Mapa embebido, selector de punto en mapa y autocompletado de direcciones (API de Google).
+- Fotos de los platillos nuevos y notas por categoría.
 - Nota por línea y selectores de variante en la tarjeta.
 - Bloqueo por horario de atención.
 - Toasts o animaciones fuera del panel del carrito y del feedback al agregar.

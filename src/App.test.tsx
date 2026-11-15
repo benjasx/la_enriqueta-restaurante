@@ -24,22 +24,22 @@ describe("App", () => {
 
   it("filters the menu by category", async () => {
     render(<App />);
-    expect(screen.getAllByRole("tab")).toHaveLength(8);
+    expect(screen.getAllByRole("tab")).toHaveLength(11);
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
     await userEvent.click(
       screen.getByRole("tab", { name: /antojitos tradicionales/i }),
     );
-    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(6);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(7);
   });
 
-  it("shows all 40 menu items across the tabs", async () => {
+  it("shows all 57 menu items across the tabs", async () => {
     render(<App />);
     let total = 0;
     for (const tab of screen.getAllByRole("tab")) {
       await userEvent.click(tab);
       total += screen.getAllByRole("heading", { level: 3 }).length;
     }
-    expect(total).toBe(40);
+    expect(total).toBe(57);
   });
 
   it("adds liquor by glass or bottle to the cart with the exact price", async () => {
@@ -88,5 +88,21 @@ describe("App", () => {
         .getByRole("link", { name: /enviar pedido/i })
         .getAttribute("href") ?? "";
     expect(decodeURIComponent(href)).toContain("- 2 × Pozole – Mediano");
+  });
+
+  it("adds a new combo to the cart with its exact price", async () => {
+    render(<App />);
+    await userEvent.click(
+      screen.getByRole("tab", { name: /desayunos y molletes/i }),
+    );
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /agregar promociones de tamales desayuno para 2/i,
+      }),
+    );
+    expect(
+      screen.getByRole("button", { name: /ver pedido/i }),
+    ).toHaveAccessibleName(/1 pieza, \$159/);
   });
 });

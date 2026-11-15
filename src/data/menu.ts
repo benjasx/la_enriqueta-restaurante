@@ -6,7 +6,10 @@ export type CategoryId =
   | "postres"
   | "bebidas"
   | "cocteleria"
-  | "licores";
+  | "licores"
+  | "fuertes"
+  | "desayunos"
+  | "kids";
 
 export type PriceOption = {
   label: string;
@@ -32,7 +35,10 @@ export const categories: { id: CategoryId; label: string }[] = [
   { id: "especialidades", label: "Especialidades de la Casa" },
   { id: "tradicionales", label: "Antojitos Tradicionales" },
   { id: "entradas", label: "Entradas" },
+  { id: "fuertes", label: "Platos Fuertes" },
+  { id: "desayunos", label: "Desayunos y Molletes" },
   { id: "extras", label: "Para Acompañar y Extras" },
+  { id: "kids", label: "Menú Kids" },
   { id: "postres", label: "Postres" },
   { id: "bebidas", label: "Bebidas" },
   { id: "cocteleria", label: "Coctelería y Cervezas" },
@@ -91,6 +97,156 @@ export const menu: MenuItem[] = [
     price: 160,
   },
   {
+    id: "bistec-mexicana",
+    category: "fuertes",
+    image: "/img/bistec_mex.png",
+    name: "Bistec a la Mexicana",
+    description:
+      "Suave carne de res guisada con tomate, cebolla y chile verde. El sabor más tradicional de nuestra cocina.",
+    note: "Se sirve con chilaquiles rojos y frijolitos refritos. Café americano (250 ml) por $35 adicionales.",
+    price: 155,
+  },
+  {
+    id: "tasajo-arrachera",
+    category: "fuertes",
+    name: "Tasajo de Arrachera",
+    description:
+      "Arrachera de res suave y jugosa, asada a la perfección. Un festín para los amantes de la carne.",
+    note: "Se sirve con chilaquiles rojos y frijolitos refritos. Café americano (250 ml) por $35 adicionales.",
+    price: 180,
+  },
+  {
+    id: "higado-encebollado",
+    category: "fuertes",
+    name: "Hígado Encebollado",
+    description:
+      "Un clásico nutritivo y lleno de sabor, preparado con abundante cebolla caramelizada.",
+    note: "Se sirve con chilaquiles rojos y frijolitos refritos. Café americano (250 ml) por $35 adicionales.",
+    price: 135,
+  },
+  {
+    id: "chicharron-salsa-roja",
+    category: "fuertes",
+    name: "Chicharrón en Salsa Roja",
+    description:
+      "Chicharrón de cerdo en su punto, bañado en nuestra salsa roja especial de chiles secos.",
+    note: "Se sirve con chilaquiles rojos y frijolitos refritos. Café americano (250 ml) por $35 adicionales.",
+    price: 155,
+  },
+  {
+    id: "chuletas-ahumadas",
+    category: "fuertes",
+    name: "Chuletas Ahumadas",
+    description:
+      "Dos piezas de chuleta ahumada doraditas, el equilibrio perfecto entre lo salado y lo ahumado.",
+    note: "Se sirve con chilaquiles rojos y frijolitos refritos. Café americano (250 ml) por $35 adicionales.",
+    price: 135,
+  },
+  {
+    id: "huevos-del-dia",
+    category: "desayunos",
+    name: "Los Huevos del Día",
+    description:
+      "Tradición en cada bocado, acompañados de chilaquiles rojos y frijoles refritos.",
+    options: [
+      {
+        label: "A la Mexicana",
+        price: 110,
+        description: "Revueltos con tomate, cebolla y chile.",
+      },
+      {
+        label: "Al gusto: jamón de pavo o salchicha",
+        price: 120,
+        description: "Elige tu combinación favorita.",
+      },
+      {
+        label: "Al gusto: tocino crujiente o chorizo casero",
+        price: 130,
+        description: "Elige tu combinación favorita.",
+      },
+    ],
+  },
+  {
+    id: "molletes",
+    category: "desayunos",
+    name: "Molletes",
+    description:
+      "Pan de la casa (bolillo) tostado con mantequilla y frijoles, cubierto de queso fundido y salsa pico gallo.",
+    options: [
+      {
+        label: "Con carne asada",
+        price: 75,
+        description:
+          "La versión más completa, con jugosa carne asada picadita.",
+      },
+      {
+        label: "Con chorizo",
+        price: 65,
+        description:
+          "El clásico favorito, con chorizo dorado que le da un toque picante.",
+      },
+      {
+        label: "Dulces",
+        price: 45,
+        description:
+          "Para el antojo ligero o el postre; tostados con mantequilla y una lluvia de azúcar.",
+      },
+    ],
+  },
+  {
+    id: "tamales",
+    category: "desayunos",
+    name: "Tamales Tradicionales",
+    description: "Receta casera al vapor.",
+    options: [
+      { label: "Pollo con salsa verde", price: 50 },
+      { label: "Cerdo con adobo especial", price: 50 },
+    ],
+  },
+  {
+    id: "promociones-tamales",
+    category: "desayunos",
+    name: "Promociones de Tamales",
+    description: "El antojo perfecto para comenzar el día.",
+    wide: true,
+    options: [
+      { label: "Tamal + Café con refill", price: 85 },
+      { label: "Tamal + Champurrado", price: 85 },
+      {
+        label: "Desayuno para 2",
+        price: 159,
+        description: "2 tamales + 1 café con refill + 1 champurrado.",
+      },
+      {
+        label: "Tamal + Empanada dulce de requesón",
+        price: 119,
+        description: "Más café con refill o champurrado.",
+      },
+    ],
+  },
+  {
+    id: "kids-sincronizadas",
+    category: "kids",
+    image: "/img/sincronizada.png",
+    name: "Sincronizadas Kids",
+    description: "Del Menú Kids: tortilla de harina rellena de queso y jamón.",
+    price: 60,
+  },
+  {
+    id: "kids-burritos",
+    category: "kids",
+    name: "Burritos Kids",
+    description: "Del Menú Kids.",
+    price: 45,
+  },
+  {
+    id: "kids-hot-cake",
+    category: "kids",
+    name: "Hot cake Kids",
+    description: "Del Menú Kids.",
+    price: 35,
+  },
+  {
     id: "pozole",
     category: "tradicionales",
     image: "/img/pozole.jpeg",
@@ -117,6 +273,17 @@ export const menu: MenuItem[] = [
       { label: "Pollo", price: 70 },
       { label: "Pierna", price: 75 },
       { label: "Pata", price: 80 },
+      {
+        label: "Carnitas",
+        price: 55,
+        description:
+          "Con fresca y rica salsa bandera (jitomate, cebolla y chile verde).",
+      },
+      {
+        label: "Tinga de pollo",
+        price: 55,
+        description: "Con fresca ensalada y topping de crema.",
+      },
     ],
   },
   {
@@ -129,6 +296,8 @@ export const menu: MenuItem[] = [
       { label: "Papa", price: 70 },
       { label: "Pollo", price: 80 },
       { label: "Pierna", price: 85 },
+      { label: "Camarón seco molido", price: 80 },
+      { label: "Picadillo mixto", price: 85 },
     ],
   },
   {
@@ -156,6 +325,22 @@ export const menu: MenuItem[] = [
       { label: "Pollo", price: 45 },
       { label: "Pierna", price: 50 },
     ],
+  },
+  {
+    id: "quesadilla-maiz",
+    category: "entradas",
+    name: "Quesadilla de Maíz",
+    description: "Quesadilla de maíz, a la plancha o frita.",
+    unit: "1 pieza",
+    options: [
+      "Naturales",
+      "Pollo",
+      "Pierna",
+      "Picadillo",
+      "Asada",
+      "Chorizo",
+      "Camarón",
+    ].map((label) => ({ label, price: 85 })),
   },
   {
     id: "rollitos-enriqueto",
@@ -187,6 +372,11 @@ export const menu: MenuItem[] = [
       { label: "Gallina", price: 55 },
       { label: "Pollo", price: 70 },
       { label: "Pierna", price: 75 },
+      { label: "Camarón seco", price: 75 },
+      { label: "Camarón fresco", price: 75 },
+      { label: "Picadillo", price: 75 },
+      { label: "Demolida", price: 75 },
+      { label: "Chanfaina", price: 60 },
     ],
   },
   {
@@ -228,6 +418,14 @@ export const menu: MenuItem[] = [
       { label: "Queso y jamón", price: 60 },
       { label: "Especial (queso, jamón, panela, pollo o pierna)", price: 80 },
     ],
+  },
+  {
+    id: "torta-tinga",
+    category: "tradicionales",
+    image: "/img/torta_t.png",
+    name: "Torta de Tinga",
+    description: "Torta de tinga.",
+    price: 55,
   },
   {
     id: "pollo-dorado",
@@ -291,6 +489,7 @@ export const menu: MenuItem[] = [
   {
     id: "jericallas",
     category: "postres",
+    image: "/img/jericalla.png",
     name: "Jericallas",
     description: "Jericallas.",
     price: 55,
@@ -308,6 +507,13 @@ export const menu: MenuItem[] = [
     name: "Postre del día",
     description: "Pregunta por el postre del día.",
     price: 99,
+  },
+  {
+    id: "empanadas-requeson",
+    category: "postres",
+    name: "Empanadas de requesón dulce",
+    description: "Empanadas rellenas de requesón dulce.",
+    price: 45,
   },
   {
     id: "aguas-frescas",
@@ -337,9 +543,24 @@ export const menu: MenuItem[] = [
     description: "Para acompañar tu comida.",
     options: [
       { label: "Champurrado", price: 45 },
-      { label: "Café americano o de olla", price: 35 },
+      { label: "Café de olla", price: 40 },
+      { label: "Café americano", price: 35 },
       { label: "Té", price: 35 },
     ],
+  },
+  {
+    id: "refrescos",
+    category: "bebidas",
+    name: "Refrescos",
+    description: "Refrescos para acompañar tu comida.",
+    price: 40,
+  },
+  {
+    id: "jugo-naranja",
+    category: "bebidas",
+    name: "Jugo de naranja",
+    description: "Jugo de naranja.",
+    price: 60,
   },
   {
     id: "mocktails",
