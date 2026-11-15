@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { Gallery } from "@/components/Gallery";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { KaraokeBanner } from "@/components/KaraokeBanner";
 import { LocalBanner } from "@/components/LocalBanner";
 import { Menu } from "@/components/Menu";
 
@@ -31,6 +32,7 @@ export const App = () => {
         <Menu />
         <About />
         <Gallery />
+        <KaraokeBanner />
         <LocalBanner />
         <Contact />
       </main>
