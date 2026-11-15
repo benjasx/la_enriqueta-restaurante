@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Size } from "@/cart/cartReducer";
 import { useCart } from "@/cart/useCart";
 import { Photo } from "@/components/Photo";
@@ -20,6 +20,27 @@ const mono =
 export const Menu = () => {
   const { dispatch } = useCart();
   const [cat, setCat] = useState<CategoryId>("especialidades");
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [edges, setEdges] = useState({ left: false, right: false });
+  const updateEdges = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const left = el.scrollLeft > 4;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+    setEdges((p) =>
+      p.left === left && p.right === right ? p : { left, right },
+    );
+  }, []);
+  useEffect(() => {
+    updateEdges();
+    window.addEventListener("resize", updateEdges);
+    return () => window.removeEventListener("resize", updateEdges);
+  }, [updateEdges]);
+  const nudge = (dir: 1 | -1) =>
+    tabsRef.current?.scrollBy?.({
+      left: dir * tabsRef.current.clientWidth * 0.6,
+      behavior: "smooth",
+    });
   const visible = menu.filter((d) => d.category === cat);
   const count = (id: CategoryId) =>
     menu.filter((d) => d.category === id).length;
@@ -48,38 +69,71 @@ export const Menu = () => {
               ))}
             </div>
           </Reveal>
-          <div
-            role="tablist"
-            className="bg-sand flex w-fit max-w-full scrollbar-none gap-1 overflow-x-auto rounded-full p-1.5 [&::-webkit-scrollbar]:hidden"
-          >
-            {categories.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                role="tab"
-                aria-selected={cat === c.id}
-                onClick={(e) => {
-                  setCat(c.id);
-                  e.currentTarget.scrollIntoView?.({
-                    behavior: "smooth",
-                    block: "nearest",
-                    inline: "center",
-                  });
-                }}
-                className={`shrink-0 cursor-pointer rounded-full border-0 px-5 py-[11px] text-sm font-semibold whitespace-nowrap transition-colors ${
-                  cat === c.id
-                    ? "bg-wine shadow-card text-white"
-                    : "text-body hover:text-wine bg-transparent"
-                }`}
-              >
-                {c.label}{" "}
-                <span className="font-medium opacity-60">{count(c.id)}</span>
-              </button>
-            ))}
+          <div className="relative w-fit max-w-full">
+            {(["left", "right"] as const).map((side) => {
+              const show = side === "left" ? edges.left : edges.right;
+              return (
+                <button
+                  key={side}
+                  type="button"
+                  tabIndex={-1}
+                  aria-label={
+                    side === "left"
+                      ? "Ver categorías anteriores"
+                      : "Ver más categorías"
+                  }
+                  onClick={() => nudge(side === "left" ? -1 : 1)}
+                  className={`from-sand absolute inset-y-0 z-10 flex w-14 cursor-pointer items-center border-0 to-transparent transition-opacity ${
+                    side === "left"
+                      ? "left-0 justify-start rounded-l-full bg-linear-to-r pl-2"
+                      : "right-0 justify-end rounded-r-full bg-linear-to-l pr-2"
+                  } ${show ? "opacity-100" : "pointer-events-none opacity-0"}`}
+                >
+                  <span
+                    className={`bg-wine shadow-card flex size-7 items-center justify-center rounded-full text-base leading-none text-white ${
+                      side === "right" ? "animate-pulse" : ""
+                    }`}
+                  >
+                    {side === "left" ? "‹" : "›"}
+                  </span>
+                </button>
+              );
+            })}
+            <div
+              ref={tabsRef}
+              role="tablist"
+              onScroll={updateEdges}
+              className="bg-sand flex w-fit max-w-full scrollbar-none gap-1 overflow-x-auto rounded-full p-1.5 [&::-webkit-scrollbar]:hidden"
+            >
+              {categories.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={cat === c.id}
+                  onClick={(e) => {
+                    setCat(c.id);
+                    e.currentTarget.scrollIntoView?.({
+                      behavior: "smooth",
+                      block: "nearest",
+                      inline: "center",
+                    });
+                  }}
+                  className={`shrink-0 cursor-pointer rounded-full border-0 px-5 py-[11px] text-sm font-semibold whitespace-nowrap transition-colors ${
+                    cat === c.id
+                      ? "bg-wine shadow-card text-white"
+                      : "text-body hover:text-wine bg-transparent"
+                  }`}
+                >
+                  {c.label}{" "}
+                  <span className="font-medium opacity-60">{count(c.id)}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-5">
+        <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 items-stretch gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
           {visible.map((d, i) => {
             const label = priceLabel(d);
             const grouped = Boolean(d.wide);
@@ -94,7 +148,9 @@ export const Menu = () => {
               <Reveal
                 key={d.id}
                 delay={(i % 3) * 0.08}
-                className={grouped ? "col-span-full" : undefined}
+                className={`w-[80%] shrink-0 snap-start sm:w-auto sm:shrink ${
+                  grouped ? "sm:col-span-full" : ""
+                }`}
               >
                 <motion.article
                   whileHover={{ y: -3 }}

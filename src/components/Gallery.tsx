@@ -1,5 +1,4 @@
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { gallery } from "@/data/site";
@@ -8,6 +7,52 @@ export const Gallery = () => {
   const [selected, setSelected] = useState<(typeof gallery)[number] | null>(
     null,
   );
+
+  const slides = gallery.filter((g) => g.src);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const goTo = useCallback(
+    (i: number) => {
+      const n = slides.length;
+      const idx = (i + n) % n;
+      const el = itemRefs.current[idx];
+      const track = trackRef.current;
+      if (!el || !track) return;
+      track.scrollTo?.({
+        left: el.offsetLeft - (track.clientWidth - el.clientWidth) / 2,
+        behavior: "smooth",
+      });
+      setActive(idx);
+    },
+    [slides.length],
+  );
+
+  const onScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const mid = track.scrollLeft + track.clientWidth / 2;
+    let best = 0;
+    let dist = Infinity;
+    itemRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const d = Math.abs(el.offsetLeft + el.clientWidth / 2 - mid);
+      if (d < dist) {
+        dist = d;
+        best = i;
+      }
+    });
+    setActive(best);
+  };
+
+  useEffect(() => {
+    if (paused || selected || slides.length < 2) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => goTo(active + 1), 3500);
+    return () => window.clearInterval(id);
+  }, [paused, selected, active, goTo, slides.length]);
 
   useEffect(() => {
     if (!selected) return;
@@ -40,32 +85,80 @@ export const Gallery = () => {
             Pozole, chilaquiles, sopes y más, hechos al momento.
           </p>
         </Reveal>
-        <div className="grid grid-flow-dense auto-rows-[220px] grid-cols-2 gap-4 min-[1024px]:grid-cols-4">
-          {gallery.map((g, i) => (
-            <Reveal
-              key={g.id}
-              delay={(i % 3) * 0.08}
-              className={`shadow-card relative overflow-hidden rounded-[var(--radius-card)] ${g.className}`}
-            >
-              <motion.div
-                className="size-full"
-                whileHover={{ scale: 1.06 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+      </div>
+      <div className="mx-auto max-w-[1400px]">
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
+        >
+          <div
+            ref={trackRef}
+            onScroll={onScroll}
+            aria-roledescription="carrusel"
+            aria-label="Galería de platillos"
+            className="flex snap-x snap-mandatory items-center gap-4 overflow-x-auto scroll-smooth px-[10%] py-8 sm:px-[calc(50%-230px)] [&::-webkit-scrollbar]:hidden"
+          >
+            {slides.map((g, i) => (
+              <div
+                key={g.id}
+                ref={(el) => {
+                  itemRefs.current[i] = el;
+                }}
+                aria-roledescription="diapositiva"
+                aria-label={`${i + 1} de ${slides.length}`}
+                className={`shadow-card relative aspect-[4/5] w-[80%] shrink-0 snap-center overflow-hidden rounded-[var(--radius-card)] transition-all duration-500 ease-out sm:w-[460px] ${
+                  i === active
+                    ? "scale-100 opacity-100"
+                    : "scale-[0.88] opacity-55"
+                }`}
               >
-                {g.src ? (
-                  <button
-                    type="button"
-                    aria-label={`Ver ${g.hint}`}
-                    onClick={() => setSelected(g)}
-                    className="block size-full cursor-zoom-in"
-                  >
-                    <Photo src={g.src} hint={g.hint} />
-                  </button>
-                ) : (
-                  <Photo hint={g.hint} />
-                )}
-              </motion.div>
-            </Reveal>
+                <button
+                  type="button"
+                  aria-label={`Ver ${g.hint}`}
+                  onClick={() => (i === active ? setSelected(g) : goTo(i))}
+                  className="block size-full cursor-zoom-in"
+                >
+                  <Photo src={g.src} hint={g.hint} />
+                </button>
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 pt-16 pb-5">
+                  <span className="font-display text-xl font-semibold text-white">
+                    {g.hint}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {(["prev", "next"] as const).map((dir) => (
+            <button
+              key={dir}
+              type="button"
+              aria-label={dir === "prev" ? "Foto anterior" : "Foto siguiente"}
+              onClick={() => goTo(active + (dir === "prev" ? -1 : 1))}
+              className={`text-wine shadow-card absolute top-1/2 z-10 hidden size-12 -translate-y-1/2 cursor-pointer place-items-center rounded-full border-0 bg-white/90 text-2xl backdrop-blur transition-transform hover:scale-110 sm:grid ${
+                dir === "prev" ? "left-4" : "right-4"
+              }`}
+            >
+              {dir === "prev" ? "‹" : "›"}
+            </button>
+          ))}
+        </div>
+        <div className="mt-2 flex items-center justify-center gap-2">
+          {slides.map((g, i) => (
+            <button
+              key={g.id}
+              type="button"
+              aria-label={`Ir a ${g.hint}`}
+              aria-current={i === active}
+              onClick={() => goTo(i)}
+              className={`h-2 cursor-pointer rounded-full border-0 p-0 transition-all duration-300 ${
+                i === active ? "bg-wine w-8" : "bg-wine/25 w-2"
+              }`}
+            />
           ))}
         </div>
       </div>
