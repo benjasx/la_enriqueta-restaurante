@@ -204,7 +204,7 @@ const CategoryTabs = () => {
     });
 
   return (
-    <div className="relative mx-auto max-w-[1180px]">
+    <div className="relative mx-auto w-full max-w-[1180px]">
       {(["left", "right"] as const).map((side) => {
         const show = side === "left" ? edges.left : edges.right;
         return (
