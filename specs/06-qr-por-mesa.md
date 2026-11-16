@@ -5,6 +5,8 @@
 > **Fecha:** 2026-11-16
 > **Objetivo:** Generar un QR imprimible por mesa que abra el menú en "modo mesa", donde el cliente pide sin dar teléfono, domicilio ni ubicación y el pedido llega al WhatsApp del negocio identificado con el número de mesa.
 
+> **Nota (2026-11-16):** la SPEC 07 **revoca** de esta spec: la activación del modo mesa con `/?mesa=N` en el sitio principal (ahora el QR abre la página oculta `mesa.html`), el guardado de la mesa en `sessionStorage`, el chip flotante "Mesa N" y el botón "Salir del modo mesa". Se conserva el comportamiento del modo mesa en el carrito: nombre opcional, sin teléfono, domicilio ni ubicación, y el mensaje "Pedido para la MESA N". Este documento queda como registro de lo implementado.
+
 ## Por qué existe esta spec
 
 El carrito de la SPEC 04 está pensado para pedidos a domicilio o para recoger: exige nombre completo, teléfono y domicilio. Un cliente sentado en el restaurante no tiene nada de eso que dar, y el negocio solo necesita saber a qué mesa llevar la comida. Esta spec añade un tercer modo de entrega, "en mesa", que se activa únicamente al entrar por el QR de una mesa. **Modifica** la validación del cliente y el formato del mensaje de la SPEC 04 solo cuando hay una mesa activa; el flujo normal no cambia.
@@ -173,7 +175,7 @@ Archivos que aparecen o cambian:
 | Cambiar `site.tables` y olvidar regenerar los QR (o al revés)                                  | El script usa `--tables=` con default 20 y el criterio de aceptación verifica 20; se documenta en el encabezado del script.                       |
 | El dominio de los QR cambia y los impresos dejan de funcionar                                  | Fuera del alcance; si pasa, se regeneran con `--url=` nuevo. Se recomienda dominio estable antes de imprimir.                                     |
 | El navegador de la cámara abre el enlace en un visor integrado sin `sessionStorage` compartido | La mesa se guarda en esa misma pestaña al abrir; el criterio de recarga lo verifica. Si el cliente cambia de navegador, deberá escanear de nuevo. |
-| El chip no cabe en la barra a 375 px                                                           | Chip flotante fuera de la barra; se revisa en el paso 5.                                                                                   |
+| El chip no cabe en la barra a 375 px                                                           | Chip flotante fuera de la barra; se revisa en el paso 5.                                                                                          |
 | Un cliente de mesa se queda con datos de domicilio escritos antes                              | En modo mesa se ignoran al enviar y no se muestran; al salir del modo reaparecen intactos.                                                        |
 
 ## Qué **no** entra en esta spec

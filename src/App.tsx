@@ -12,8 +12,6 @@ import { Hero } from "@/components/Hero";
 import { KaraokeBanner } from "@/components/KaraokeBanner";
 import { LocalBanner } from "@/components/LocalBanner";
 import { Menu } from "@/components/Menu";
-import { TableChip } from "@/components/TableChip";
-import { TableProvider } from "@/table/TableContext";
 
 export const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -24,28 +22,25 @@ export const App = () => {
   }, []);
 
   return (
-    <TableProvider>
-      <CartProvider>
-        <Header
-          onOpenCart={() => setCartOpen(true)}
-          cartButtonRef={cartButtonRef}
-        />
-        <main>
-          <Hero />
-          <Menu />
-          <KaraokeBanner />
-          <About />
-          <Gallery />
-          <LocalBanner />
-          <Contact />
-        </main>
-        <Footer />
-        <TableChip />
-        <CartToast hidden={cartOpen} />
-        <AnimatePresence>
-          {cartOpen && <CartPanel onClose={closeCart} />}
-        </AnimatePresence>
-      </CartProvider>
-    </TableProvider>
+    <CartProvider>
+      <Header
+        onOpenCart={() => setCartOpen(true)}
+        cartButtonRef={cartButtonRef}
+      />
+      <main>
+        <Hero />
+        <Menu />
+        <KaraokeBanner />
+        <About />
+        <Gallery />
+        <LocalBanner />
+        <Contact />
+      </main>
+      <Footer />
+      <CartToast hidden={cartOpen} />
+      <AnimatePresence>
+        {cartOpen && <CartPanel onClose={closeCart} />}
+      </AnimatePresence>
+    </CartProvider>
   );
 };

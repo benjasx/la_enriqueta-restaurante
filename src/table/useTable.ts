@@ -1,14 +1,10 @@
 import { createContext, useContext } from "react";
 
 export type TableContextValue = {
-  table: number | null; // mesa activa, o null en el flujo normal
-  leaveTable: () => void;
+  table: number | null; // mesa activa, o null en el sitio principal
 };
 
-export const TableContext = createContext<TableContextValue | null>(null);
+// Sin proveedor (sitio principal) el valor por defecto es "sin mesa".
+export const TableContext = createContext<TableContextValue>({ table: null });
 
-export const useTable = () => {
-  const ctx = useContext(TableContext);
-  if (!ctx) throw new Error("useTable must be used inside <TableProvider>");
-  return ctx;
-};
+export const useTable = () => useContext(TableContext);

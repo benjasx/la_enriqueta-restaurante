@@ -121,3 +121,25 @@ describe("App", () => {
     expect(banner.previousElementSibling).toBe(menu);
   });
 });
+
+describe("App ignores the table parameter", () => {
+  beforeEach(() => window.localStorage.clear());
+  afterEach(() => window.history.replaceState({}, "", "/"));
+
+  it("shows no table mode with /?mesa=7 and asks for the delivery data", async () => {
+    window.history.replaceState({}, "", "/?mesa=7");
+    render(<App />);
+    expect(screen.queryByText(/^Mesa \d+$/)).toBeNull();
+    const nav = screen.getByRole("navigation", { name: /principal/i });
+    expect(within(nav).queryByText(/mesa/i)).toBeNull();
+    expect(document.querySelector('a[href*="mesa.html"]')).toBeNull();
+
+    await userEvent.click(
+      screen.getAllByRole("button", { name: /pedir|agregar/i })[0],
+    );
+    await userEvent.click(screen.getByRole("button", { name: /ver pedido/i }));
+    const dialog = screen.getByRole("dialog", { name: /tu pedido/i });
+    expect(dialog).not.toHaveTextContent(/pedido para la mesa/i);
+    expect(within(dialog).getByLabelText(/teléfono/i)).toBeInTheDocument();
+  });
+});
