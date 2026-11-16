@@ -12,6 +12,7 @@ import { Hero } from "@/components/Hero";
 import { KaraokeBanner } from "@/components/KaraokeBanner";
 import { LocalBanner } from "@/components/LocalBanner";
 import { Menu } from "@/components/Menu";
+import { TableChip } from "@/components/TableChip";
 import { TableProvider } from "@/table/TableContext";
 
 export const App = () => {
@@ -39,6 +40,7 @@ export const App = () => {
           <Contact />
         </main>
         <Footer />
+        <TableChip />
         <CartToast hidden={cartOpen} />
         <AnimatePresence>
           {cartOpen && <CartPanel onClose={closeCart} />}

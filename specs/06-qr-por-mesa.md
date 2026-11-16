@@ -18,7 +18,7 @@ El carrito de la SPEC 04 está pensado para pedidos a domicilio o para recoger: 
 - Un parámetro `mesa` inválido (`0`, `21`, `abc`, vacío) se ignora; si ya había una mesa guardada, se conserva.
 - En modo mesa, el panel del carrito (`CartPanel`) oculta teléfono, domicilio, ubicación y el selector Domicilio/Recoger; solo muestra un campo "Nombre (opcional)". El envío nunca se bloquea por datos del cliente; solo por carrito vacío.
 - Mensaje de WhatsApp distinto en modo mesa, con la mesa en la primera línea y sin teléfono, domicilio ni ubicación (formato en "Modelo de datos").
-- Chip "Mesa N" en la barra de navegación (`Header`) junto al botón del carrito, y botón "Salir del modo mesa" dentro del panel del carrito para volver al flujo normal (a domicilio o recoger).
+- Chip flotante "Mesa N" (`TableChip`, esquina inferior izquierda, fuera de la barra de navegación) y botón "Salir del modo mesa" dentro del panel del carrito para volver al flujo normal (a domicilio o recoger).
 - Constante `tables` en `src/data/site.ts` con el número de mesas (20).
 - Script `npm run generate:qrs` que escribe en `qr-mesas/` un SVG y un PNG por mesa (`mesa-01.svg`, `mesa-01.png`, …) y un `index.html` imprimible con todos los QR rotulados "Mesa N". La carpeta se agrega a `.gitignore`.
 - Dependencia nueva solo de desarrollo: `qrcode`. No entra al bundle del sitio.
@@ -105,7 +105,7 @@ Archivos que aparecen o cambian:
 | `src/cart/cartMessage.ts`                                                                                       | Formato de modo mesa                                                                         |
 | `src/components/CustomerForm.tsx`                                                                               | Modo mesa: solo nombre opcional                                                              |
 | `src/components/CartPanel.tsx`                                                                                  | Pasa la mesa a validación y mensaje; botón "Salir del modo mesa"; aviso "Pedido para Mesa N" |
-| `src/components/Header.tsx`                                                                                     | Chip "Mesa N"                                                                                |
+| `src/components/TableChip.tsx`                                                                                  | Nuevo. Chip flotante "Mesa N", montado en `App.tsx`                                          |
 | `src/App.tsx`                                                                                                   | Envuelve con `TableProvider`                                                                 |
 | `scripts/generate-qrs.mjs`                                                                                      | Nuevo. Genera SVG, PNG e `index.html` imprimible                                             |
 | `package.json`                                                                                                  | Script `generate:qrs` y `qrcode` en `devDependencies`                                        |
@@ -118,14 +118,14 @@ Archivos que aparecen o cambian:
 2. Crear `useTable.ts` y `TableContext.tsx` (lee `location.search`, guarda, limpia el parámetro con `history.replaceState`, expone `leaveTable`) y envolver `App` con `TableProvider`. Verificar: `npm run dev` en `/?mesa=7` conserva la mesa tras recargar y la quita de la URL; `/?mesa=99` no activa nada.
 3. Ampliar `validateCustomer(customer, table)` y `cartMessage(state, table)` con el modo mesa, con tests (mensaje con y sin nombre, sin nota, sin mesa idéntico al actual, datos viejos de domicilio ignorados). Verificar: `npm test`.
 4. Adaptar `CustomerForm.tsx` y `CartPanel.tsx`: con mesa, solo el campo "Nombre (opcional)", aviso "Pedido para la Mesa N", botón "Salir del modo mesa", envío habilitado con carrito no vacío y enlace de WhatsApp con el mensaje de modo mesa. Verificar: `npm test`; en `/?mesa=7` agregar un producto y ver el enlace con `MESA 7`.
-5. Mostrar el chip "Mesa N" en `Header.tsx` junto al botón del carrito. Verificar: `npm run dev` a 375 px y 1280 px, sin scroll horizontal.
+5. Mostrar el chip flotante "Mesa N" con `TableChip.tsx`, fuera de la barra de navegación (se movió desde `Header` porque se veía apretado a 375 px). Verificar: `npm run dev` a 375 px y 1280 px.
 6. Crear `scripts/generate-qrs.mjs`: lee `--url=` (obligatoria, termina con error claro si falta o no es `https`/`http`) y `--tables=` (por defecto 20), escribe `qr-mesas/mesa-NN.svg`, `mesa-NN.png` e `index.html` imprimible; añadir `qrcode` a `devDependencies`, el script `generate:qrs` en `package.json` y `qr-mesas/` a `.gitignore`. Verificar: `npm run generate:qrs -- --url=https://ejemplo.com` crea 20 SVG, 20 PNG y el `index.html`.
 7. Añadir tests de flujo: con `?mesa=7` en la URL, el panel no pide teléfono ni domicilio, el chip dice "Mesa 7" y el enlace trae `MESA 7`; "Salir del modo mesa" devuelve el formulario normal. Verificar: `npm test`.
 
 ## Criterios de aceptación
 
 - [ ] `npm run typecheck`, `npm run lint`, `npm test` y `npm run build` terminan sin errores; `format:check` no falla por los archivos tocados.
-- [ ] Abrir `/?mesa=7` muestra el chip "Mesa 7" en la barra de navegación, y la URL queda sin el parámetro `mesa`.
+- [ ] Abrir `/?mesa=7` muestra el chip flotante "Mesa 7" y la URL queda sin el parámetro `mesa`.
 - [ ] Recargar la pestaña conserva la mesa; abrir el sitio en una pestaña o sesión nueva sin `?mesa=` no la conserva.
 - [ ] `?mesa=0`, `?mesa=21`, `?mesa=abc`, `?mesa=3.5`, `?mesa=07` y `?mesa=` no activan el modo mesa.
 - [ ] Con una mesa guardada, abrir `?mesa=99` conserva la mesa anterior.
@@ -137,7 +137,7 @@ Archivos que aparecen o cambian:
 - [ ] Sin mesa activa, el mensaje y la validación son idénticos a los de la SPEC 04 (los tests existentes pasan sin cambios de expectativa).
 - [ ] "Salir del modo mesa" quita el chip, borra `enriqueta:table:v1` y vuelve a mostrar el formulario normal, conservando las líneas del carrito.
 - [ ] Con `sessionStorage` bloqueado el modo mesa funciona hasta recargar y no hay errores en consola.
-- [ ] A 375 px el chip, el botón del carrito y el nombre del restaurante caben en la barra sin superponerse ni provocar scroll horizontal.
+- [ ] A 375 px el chip flotante no está dentro de la barra de navegación y la barra conserva su aspecto normal, sin scroll horizontal.
 - [ ] `npm run generate:qrs -- --url=https://ejemplo.com` crea `qr-mesas/mesa-01.svg` a `mesa-20.svg`, los 20 PNG y `index.html`.
 - [ ] Al decodificar `mesa-07.png` con un lector de QR se obtiene exactamente `https://ejemplo.com/?mesa=7`; con `--url=https://ejemplo.com/` (barra final) el resultado es el mismo.
 - [ ] Ejecutar el script sin `--url` o con un valor que no empieza con `http://` o `https://` termina con código distinto de 0 y un mensaje que lo explica.
@@ -157,7 +157,7 @@ Archivos que aparecen o cambian:
 - **Sí:** el nombre de modo mesa se guarda en el mismo `customer.name`. Ahorra reescribirlo y no crea otra estructura.
 - **Sí:** ignorar teléfono, domicilio y ubicación guardados al enviar en modo mesa. Datos de un pedido a domicilio anterior nunca deben llegar al mensaje de una mesa.
 - **Sí:** mensaje con "Pedido para la MESA N" en la primera línea, sin repetir la mesa abajo. Lo primero que lee el negocio es a dónde llevarlo.
-- **Sí:** chip "Mesa N" en la barra y "Salir del modo mesa" dentro del panel. El chip no es interactivo para evitar toques accidentales y ahorrar ancho a 375 px; la salida vive donde se arma el pedido.
+- **Sí:** chip flotante "Mesa N" fuera de la barra y "Salir del modo mesa" dentro del panel. Se movió de la barra tras verlo a 375 px (quedaba empalmado con el botón del carrito); el chip no es interactivo para evitar toques accidentales; la salida vive donde se arma el pedido.
 - **Sí:** script Node con `qrcode` como `devDependency`, mismo patrón que `optimize:images`. Los QR se imprimen una vez; no hace falta código en producción.
 - **No:** página `/qr` dentro del sitio. Expone una ruta pública, añade dependencia al bundle y no hay motivo para generarlos desde el navegador.
 - **Sí:** la URL base se pasa con `--url=` y no queda fija en el código. El dominio no está en el repo y puede cambiar; cambiarlo implica reimprimir, así que se evita dejarlo escondido.
@@ -173,7 +173,7 @@ Archivos que aparecen o cambian:
 | Cambiar `site.tables` y olvidar regenerar los QR (o al revés)                                  | El script usa `--tables=` con default 20 y el criterio de aceptación verifica 20; se documenta en el encabezado del script.                       |
 | El dominio de los QR cambia y los impresos dejan de funcionar                                  | Fuera del alcance; si pasa, se regeneran con `--url=` nuevo. Se recomienda dominio estable antes de imprimir.                                     |
 | El navegador de la cámara abre el enlace en un visor integrado sin `sessionStorage` compartido | La mesa se guarda en esa misma pestaña al abrir; el criterio de recarga lo verifica. Si el cliente cambia de navegador, deberá escanear de nuevo. |
-| El chip no cabe en la barra a 375 px                                                           | Chip compacto con texto corto "Mesa 7"; se revisa en el paso 5.                                                                                   |
+| El chip no cabe en la barra a 375 px                                                           | Chip flotante fuera de la barra; se revisa en el paso 5.                                                                                   |
 | Un cliente de mesa se queda con datos de domicilio escritos antes                              | En modo mesa se ignoran al enviar y no se muestran; al salir del modo reaparecen intactos.                                                        |
 
 ## Qué **no** entra en esta spec

@@ -59,10 +59,9 @@ for (let n = 1; n <= tables; n++) {
 
 const cards = items
   .map(
-    ({ n, name, target }) => `    <figure>
+    ({ n, name }) => `    <figure>
       <img src="${name}.svg" alt="QR de la mesa ${n}" />
       <figcaption>Mesa ${n}</figcaption>
-      <small>${target}</small>
     </figure>`,
   )
   .join("\n");
@@ -80,7 +79,6 @@ await writeFile(
       figure { margin: 0; text-align: center; break-inside: avoid; border: 1px solid #ccc; padding: 12px; }
       img { width: 100%; max-width: 220px; }
       figcaption { font-size: 28px; font-weight: 700; }
-      small { color: #666; word-break: break-all; }
       @media print { main { grid-template-columns: repeat(2, 1fr); } }
     </style>
   </head>

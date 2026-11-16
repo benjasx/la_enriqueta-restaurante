@@ -48,7 +48,7 @@ describe("table mode", () => {
   it("activates from ?mesa=7, cleans the URL and shows the chip", () => {
     visit("?mesa=7");
     render(<App />);
-    expect(within(nav()).getByText("Mesa 7")).toBeInTheDocument();
+    expect(screen.getByText("Mesa 7")).toBeInTheDocument();
     expect(window.location.search).toBe("");
     expect(window.sessionStorage.getItem(TABLE_KEY)).toBe("7");
   });
@@ -58,25 +58,25 @@ describe("table mode", () => {
     const first = render(<App />);
     first.unmount();
     render(<App />);
-    expect(within(nav()).getByText("Mesa 7")).toBeInTheDocument();
+    expect(screen.getByText("Mesa 7")).toBeInTheDocument();
   });
 
   it("does not keep the table in a new session", () => {
     render(<App />);
-    expect(within(nav()).queryByText(/^Mesa \d+$/)).toBeNull();
+    expect(screen.queryByText(/^Mesa \d+$/)).toBeNull();
   });
 
   it.each(["0", "21", "abc", "3.5", "07", ""])("ignores ?mesa=%s", (value) => {
     visit(`?mesa=${value}`);
     render(<App />);
-    expect(within(nav()).queryByText(/^Mesa \d+$/)).toBeNull();
+    expect(screen.queryByText(/^Mesa \d+$/)).toBeNull();
   });
 
   it("keeps the stored table when the URL has an invalid one", () => {
     window.sessionStorage.setItem(TABLE_KEY, "4");
     visit("?mesa=99");
     render(<App />);
-    expect(within(nav()).getByText("Mesa 4")).toBeInTheDocument();
+    expect(screen.getByText("Mesa 4")).toBeInTheDocument();
   });
 
   it("asks only for an optional name and sends the table message", async () => {
@@ -139,7 +139,7 @@ describe("table mode", () => {
       within(dialog).getByRole("button", { name: /salir del modo mesa/i }),
     );
     expect(window.sessionStorage.getItem(TABLE_KEY)).toBeNull();
-    expect(within(nav()).queryByText("Mesa 7")).toBeNull();
+    expect(screen.queryByText("Mesa 7")).toBeNull();
     expect(within(dialog).getByLabelText(/teléfono/i)).toBeInTheDocument();
     expect(dialog).toHaveTextContent("Pozole");
     const href =
@@ -158,6 +158,6 @@ describe("table mode", () => {
     });
     visit("?mesa=5");
     render(<App />);
-    expect(within(nav()).getByText("Mesa 5")).toBeInTheDocument();
+    expect(screen.getByText("Mesa 5")).toBeInTheDocument();
   });
 });
