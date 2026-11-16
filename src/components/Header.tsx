@@ -10,7 +10,6 @@ const links = [
   { label: "Nosotros", href: "#nosotros" },
   { label: "Galería", href: "#galeria" },
   { label: "Ubicación", href: "#ubicacion" },
-  { label: "Contacto", href: "#contacto" },
 ];
 
 export const Header = ({
@@ -28,7 +27,7 @@ export const Header = ({
   return (
     <header className="sticky top-0 z-50 px-[clamp(12px,3vw,24px)] pt-3">
       <div
-        className={`border-line mx-auto max-w-[1200px] rounded-3xl border backdrop-blur-[12px] transition-[background-color,box-shadow] duration-300 ${
+        className={`border-line mx-auto max-w-300 rounded-3xl border backdrop-blur-md transition-[background-color,box-shadow] duration-300 ${
           scrolled
             ? "bg-[rgba(251,246,238,0.98)] shadow-[0_12px_32px_-16px_rgba(120,20,60,0.4)]"
             : "bg-[rgba(251,246,238,0.85)]"
@@ -71,7 +70,7 @@ export const Header = ({
               aria-label="Abrir menú"
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
-              className="bg-sand flex size-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full min-[1100px]:hidden"
+              className="bg-sand flex size-11 cursor-pointer flex-col items-center justify-center gap-1.25 rounded-full min-[1100px]:hidden"
             >
               <span className="bg-ink h-0.5 w-5 rounded-sm" />
               <span className="bg-ink h-0.5 w-5 rounded-sm" />

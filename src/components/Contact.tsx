@@ -9,7 +9,7 @@ export const Contact = () => (
     id="ubicacion"
     className="px-[clamp(20px,4vw,32px)] py-[clamp(64px,10vw,112px)]"
   >
-    <div className="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(min(100%,360px),1fr))] gap-[clamp(28px,4vw,48px)]">
+    <div className="mx-auto grid max-w-300 grid-cols-[repeat(auto-fit,minmax(min(100%,360px),1fr))] gap-[clamp(28px,4vw,48px)]">
       <div
         id="contacto"
         className="rounded-card shadow-card flex flex-col gap-7 bg-white p-[clamp(24px,4vw,40px)]"
@@ -57,7 +57,7 @@ export const Contact = () => (
         <div className="flex flex-wrap gap-3">
           <a
             href={`tel:+${site.phone}`}
-            className="bg-orange hover:bg-orange-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
+            className="bg-orange hover:bg-orange-dark flex min-h-13 flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
           >
             Llamar ahora
           </a>
@@ -65,18 +65,18 @@ export const Contact = () => (
             href={whatsappUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green hover:bg-green-dark flex min-h-[52px] flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
+            className="bg-green hover:bg-green-dark flex min-h-13 flex-[1_1_180px] items-center justify-center rounded-full font-semibold text-white"
           >
             Escribir por WhatsApp
           </a>
         </div>
       </div>
-      <div className="rounded-card shadow-card min-h-[380px] overflow-hidden border-[6px] border-white">
+      <div className="rounded-card shadow-card min-h-95 overflow-hidden border-[6px] border-white">
         <iframe
           title="Mapa La Enriqueta Tepic"
           src={site.mapsEmbedUrl}
           loading="lazy"
-          className="block size-full min-h-[380px] border-0"
+          className="block size-full min-h-95 border-0"
         />
       </div>
     </div>

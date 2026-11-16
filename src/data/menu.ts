@@ -557,6 +557,7 @@ export const menu: MenuItem[] = [
   {
     id: "refrescos",
     category: "bebidas",
+    image: "/img/refrescos.webp",
     name: "Refrescos",
     description: "Refrescos para acompañar tu comida.",
     price: 40,
@@ -564,6 +565,7 @@ export const menu: MenuItem[] = [
   {
     id: "jugo-naranja",
     category: "bebidas",
+    image: "/img/jugo-naranja.webp",
     name: "Jugo de naranja",
     description: "Jugo de naranja.",
     price: 60,
