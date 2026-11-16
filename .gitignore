@@ -27,3 +27,8 @@ coverage
 
 # QR por mesa (generados)
 qr-mesas/
+
+# Variables de entorno locales (contienen el codigo secreto de la pagina de mesa)
+.env
+.env.*
+!.env.example
