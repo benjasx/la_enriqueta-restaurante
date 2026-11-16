@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { MenuSearch, NoResults } from "@/components/MenuSearch";
 import { lineKey, MAX_QTY, type Size } from "@/cart/cartReducer";
 import { useCart } from "@/cart/useCart";
 import {
@@ -9,6 +11,7 @@ import {
   priceLabel,
   type MenuItem,
 } from "@/data/menu";
+import { matchesQuery } from "@/data/menuSearch";
 
 const count = (id: string) => menu.filter((d) => d.category === id).length;
 
@@ -147,50 +150,170 @@ const Dish = ({ d }: { d: MenuItem }) => {
   );
 };
 
-export const MesaMenu = () => (
-  <div id="menu">
-    <div className="sticky top-[78px] z-40 bg-[linear-gradient(var(--color-cream)_80%,transparent)] px-4 pt-3.5 pb-3">
+const CategoryTabs = () => {
+  const barRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState<string>(categories[0].id);
+  const [edges, setEdges] = useState({ left: false, right: false });
+
+  const updateEdges = useCallback(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const left = el.scrollLeft > 4;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+    setEdges((p) =>
+      p.left === left && p.right === right ? p : { left, right },
+    );
+  }, []);
+
+  useEffect(() => {
+    updateEdges();
+    window.addEventListener("resize", updateEdges);
+    return () => window.removeEventListener("resize", updateEdges);
+  }, [updateEdges]);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting);
+        if (hit) setActive(hit.target.id);
+      },
+      { rootMargin: "-25% 0px -65% 0px" },
+    );
+    categories.forEach((c) => {
+      const el = document.getElementById(c.id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const bar = barRef.current;
+    const tab = bar?.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!bar || !tab) return;
+    bar.scrollTo?.({
+      left: tab.offsetLeft - (bar.clientWidth - tab.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [active]);
+
+  const nudge = (dir: 1 | -1) =>
+    barRef.current?.scrollBy?.({
+      left: dir * barRef.current.clientWidth * 0.6,
+      behavior: "smooth",
+    });
+
+  return (
+    <div className="relative mx-auto max-w-[1180px]">
+      {(["left", "right"] as const).map((side) => {
+        const show = side === "left" ? edges.left : edges.right;
+        return (
+          <button
+            key={side}
+            type="button"
+            tabIndex={-1}
+            aria-label={
+              side === "left"
+                ? "Ver categorías anteriores"
+                : "Ver más categorías"
+            }
+            onClick={() => nudge(side === "left" ? -1 : 1)}
+            className={`from-sand absolute inset-y-0 z-10 flex w-16 cursor-pointer items-center border-0 to-transparent transition-opacity ${
+              side === "left"
+                ? "left-0 justify-start rounded-l-full bg-linear-to-r pl-2"
+                : "right-0 justify-end rounded-r-full bg-linear-to-l pr-2"
+            } ${show ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          >
+            <span
+              className={`bg-wine shadow-card flex size-8 items-center justify-center rounded-full text-lg leading-none text-white ${
+                side === "right" ? "animate-pulse" : ""
+              }`}
+            >
+              {side === "left" ? "‹" : "›"}
+            </span>
+          </button>
+        );
+      })}
       <div
+        ref={barRef}
         role="group"
         aria-label="Categorías del menú"
-        className="bg-sand mx-auto flex max-w-[1180px] [scrollbar-width:none] gap-1 overflow-x-auto rounded-full p-[5px] [&::-webkit-scrollbar]:hidden"
+        onScroll={updateEdges}
+        className="bg-sand flex [scrollbar-width:none] gap-1 overflow-x-auto overscroll-x-contain rounded-full p-[5px] [&::-webkit-scrollbar]:hidden"
       >
-        {categories.map((c) => (
-          <a
-            key={c.id}
-            href={`#${c.id}`}
-            className="text-body hover:text-wine flex-none rounded-full px-4 py-2.5 text-sm font-semibold whitespace-nowrap hover:bg-white"
-          >
-            {c.label}{" "}
-            <span className="text-muted font-medium">{count(c.id)}</span>
-          </a>
+        {categories.map((c) => {
+          const on = active === c.id;
+          return (
+            <a
+              key={c.id}
+              href={`#${c.id}`}
+              aria-current={on ? "true" : undefined}
+              onClick={() => setActive(c.id)}
+              className={`flex-none rounded-full px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors ${
+                on
+                  ? "bg-wine shadow-card text-white"
+                  : "text-body hover:text-wine hover:bg-white"
+              }`}
+            >
+              {c.label}{" "}
+              <span
+                className={
+                  on ? "font-medium opacity-70" : "text-muted font-medium"
+                }
+              >
+                {count(c.id)}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export const MesaMenu = () => {
+  const [query, setQuery] = useState("");
+  const searching = query.trim() !== "";
+  const shown = menu.filter((d) => matchesQuery(d, query));
+  const sections = categories.filter((c) =>
+    shown.some((d) => d.category === c.id),
+  );
+  return (
+    <div id="menu">
+      <div className="sticky top-[78px] z-40 bg-[linear-gradient(var(--color-cream)_80%,transparent)] px-4 pt-3.5 pb-3">
+        <div className="flex flex-col gap-2.5">
+          <MenuSearch value={query} onChange={setQuery} />
+          {!searching && <CategoryTabs />}
+        </div>
+      </div>
+      <div className="mx-auto flex max-w-[1180px] flex-col gap-16 px-5 pt-4 pb-10">
+        {searching && shown.length === 0 && <NoResults query={query} />}
+        {sections.map((c) => (
+          <section key={c.id} id={c.id} className="flex flex-col gap-6">
+            <div className="border-line flex items-baseline justify-between gap-4 border-b pb-3.5">
+              <h2 className="font-display m-0 text-[clamp(28px,4vw,40px)] font-normal text-balance">
+                {c.label}
+              </h2>
+              <span className="text-muted text-[13px] tracking-[0.14em] whitespace-nowrap uppercase">
+                {platillos(shown.filter((d) => d.category === c.id).length)}
+              </span>
+            </div>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] items-start gap-5">
+              {shown
+                .filter((d) => d.category === c.id)
+                .map((d) => (
+                  <Dish key={d.id} d={d} />
+                ))}
+            </div>
+          </section>
         ))}
+        <div className="flex max-w-[760px] flex-col gap-2">
+          <p className="text-body m-0 text-[15px] leading-[1.6]">
+            {menuNotice}
+          </p>
+          <p className="text-muted m-0 text-[13px]">{menuDisclaimer}</p>
+        </div>
       </div>
     </div>
-    <div className="mx-auto flex max-w-[1180px] flex-col gap-16 px-5 pt-4 pb-10">
-      {categories.map((c) => (
-        <section key={c.id} id={c.id} className="flex flex-col gap-6">
-          <div className="border-line flex items-baseline justify-between gap-4 border-b pb-3.5">
-            <h2 className="font-display m-0 text-[clamp(28px,4vw,40px)] font-normal text-balance">
-              {c.label}
-            </h2>
-            <span className="text-muted text-[13px] tracking-[0.14em] whitespace-nowrap uppercase">
-              {platillos(count(c.id))}
-            </span>
-          </div>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] items-start gap-5">
-            {menu
-              .filter((d) => d.category === c.id)
-              .map((d) => (
-                <Dish key={d.id} d={d} />
-              ))}
-          </div>
-        </section>
-      ))}
-      <div className="flex max-w-[760px] flex-col gap-2">
-        <p className="text-body m-0 text-[15px] leading-[1.6]">{menuNotice}</p>
-        <p className="text-muted m-0 text-[13px]">{menuDisclaimer}</p>
-      </div>
-    </div>
-  </div>
-);
+  );
+};

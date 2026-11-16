@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Size } from "@/cart/cartReducer";
 import { useCart } from "@/cart/useCart";
+import { MenuSearch, NoResults } from "@/components/MenuSearch";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import {
@@ -13,6 +14,7 @@ import {
   priceLabel,
   type CategoryId,
 } from "@/data/menu";
+import { matchesQuery } from "@/data/menuSearch";
 
 const mono =
   "font-sans text-[10px] font-medium text-muted tracking-[0.08em] uppercase";
@@ -20,6 +22,8 @@ const mono =
 export const Menu = () => {
   const { dispatch } = useCart();
   const [cat, setCat] = useState<CategoryId>("especialidades");
+  const [query, setQuery] = useState("");
+  const searching = query.trim() !== "";
   const tabsRef = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ left: false, right: false });
   const updateEdges = useCallback(() => {
@@ -36,12 +40,20 @@ export const Menu = () => {
     window.addEventListener("resize", updateEdges);
     return () => window.removeEventListener("resize", updateEdges);
   }, [updateEdges]);
+  useEffect(() => {
+    const onSelect = (e: Event) =>
+      setCat((e as CustomEvent<CategoryId>).detail);
+    window.addEventListener("menu:select-category", onSelect);
+    return () => window.removeEventListener("menu:select-category", onSelect);
+  }, []);
   const nudge = (dir: 1 | -1) =>
     tabsRef.current?.scrollBy?.({
       left: dir * tabsRef.current.clientWidth * 0.6,
       behavior: "smooth",
     });
-  const visible = menu.filter((d) => d.category === cat);
+  const visible = searching
+    ? menu.filter((d) => matchesQuery(d, query))
+    : menu.filter((d) => d.category === cat);
   const count = (id: CategoryId) =>
     menu.filter((d) => d.category === id).length;
 
@@ -69,7 +81,10 @@ export const Menu = () => {
               ))}
             </div>
           </Reveal>
-          <div className="relative w-fit max-w-full">
+          <MenuSearch value={query} onChange={setQuery} />
+          <div
+            className={`relative w-fit max-w-full ${searching ? "hidden" : ""}`}
+          >
             {(["left", "right"] as const).map((side) => {
               const show = side === "left" ? edges.left : edges.right;
               return (
@@ -133,6 +148,7 @@ export const Menu = () => {
           </div>
         </div>
 
+        {searching && visible.length === 0 && <NoResults query={query} />}
         <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 items-start gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-5 pt-2 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] sm:items-start sm:gap-5 sm:overflow-visible sm:px-0 sm:pt-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
           {visible.map((d, i) => {
             const label = priceLabel(d);

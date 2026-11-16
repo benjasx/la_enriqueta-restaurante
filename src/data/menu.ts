@@ -109,6 +109,7 @@ export const menu: MenuItem[] = [
   {
     id: "tasajo-arrachera",
     category: "fuertes",
+    image: "/img/tasajo_arrachera.webp",
     name: "Tasajo de Arrachera",
     description:
       "Arrachera de res suave y jugosa, asada a la perfección. Un festín para los amantes de la carne.",
@@ -118,6 +119,7 @@ export const menu: MenuItem[] = [
   {
     id: "higado-encebollado",
     category: "fuertes",
+    image: "/img/higado_encebollado.webp",
     name: "Hígado Encebollado",
     description:
       "Un clásico nutritivo y lleno de sabor, preparado con abundante cebolla caramelizada.",
@@ -136,6 +138,7 @@ export const menu: MenuItem[] = [
   {
     id: "chuletas-ahumadas",
     category: "fuertes",
+    image: "/img/chuleta.webp",
     name: "Chuletas Ahumadas",
     description:
       "Dos piezas de chuleta ahumada doraditas, el equilibrio perfecto entre lo salado y lo ahumado.",
@@ -456,6 +459,7 @@ export const menu: MenuItem[] = [
   {
     id: "extras",
     category: "extras",
+    image: "/img/extras.webp",
     name: "Extras",
     description: "Complementa tu platillo.",
     options: [
@@ -510,6 +514,7 @@ export const menu: MenuItem[] = [
   {
     id: "postre-del-dia",
     category: "postres",
+    image: "/img/postre_dia.webp",
     name: "Postre del día",
     description: "Pregunta por el postre del día.",
     price: 99,

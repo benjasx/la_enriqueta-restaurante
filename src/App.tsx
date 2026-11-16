@@ -12,6 +12,7 @@ import { Hero } from "@/components/Hero";
 import { KaraokeBanner } from "@/components/KaraokeBanner";
 import { LocalBanner } from "@/components/LocalBanner";
 import { Menu } from "@/components/Menu";
+import { MichePromoBanner } from "@/components/MichePromoBanner";
 
 export const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -31,6 +32,7 @@ export const App = () => {
         <Hero />
         <Menu />
         <KaraokeBanner />
+        <MichePromoBanner />
         <About />
         <Gallery />
         <LocalBanner />

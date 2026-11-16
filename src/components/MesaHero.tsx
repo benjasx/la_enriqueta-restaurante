@@ -6,7 +6,7 @@ const photos = [
     eager: true,
   },
   { src: "/img/tostada.webp", alt: "Tostadas", className: "" },
-  { src: "/img/agua-fresca.webp", alt: "Agua fresca", className: "" },
+  { src: "/img/especial.webp", alt: "Especial del día", className: "" },
 ];
 
 const button =
