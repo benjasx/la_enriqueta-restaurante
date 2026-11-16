@@ -24,3 +24,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# QR por mesa (generados)
+qr-mesas/

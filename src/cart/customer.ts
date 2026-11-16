@@ -65,7 +65,14 @@ export const parseMapsLocation = (raw: string): MapsLocation => {
   }
 };
 
-export const validateCustomer = (c: Customer): CustomerCheck => {
+export const validateCustomer = (
+  c: Customer,
+  table: number | null = null,
+): CustomerCheck => {
+  // Modo mesa: no se exige ningún dato del cliente.
+  if (table !== null)
+    return { ok: true, errors: {}, missing: [], phone: null, location: null };
+
   const errors: CustomerCheck["errors"] = {};
   const missing: string[] = [];
 

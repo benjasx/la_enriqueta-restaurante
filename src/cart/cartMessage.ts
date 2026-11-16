@@ -4,7 +4,10 @@ import { money } from "@/data/menu";
 
 const sizeLabel = { copeo: "Copeo", botella: "Botella" } as const;
 
-export const cartMessage = ({ lines, note, customer }: CartState) => {
+export const cartMessage = (
+  { lines, note, customer }: CartState,
+  table: number | null = null,
+) => {
   const rows = lines.flatMap((l) => {
     const r = resolveLine(l);
     if (!r) return [];
@@ -17,7 +20,9 @@ export const cartMessage = ({ lines, note, customer }: CartState) => {
     ];
   });
   const out = [
-    "¡Hola La Enriqueta! Quiero hacer este pedido:",
+    table !== null
+      ? `¡Hola La Enriqueta! Pedido para la MESA ${table}:`
+      : "¡Hola La Enriqueta! Quiero hacer este pedido:",
     ...rows,
     "",
     `Total: ${money(cartTotal(lines))} MXN`,
@@ -26,6 +31,10 @@ export const cartMessage = ({ lines, note, customer }: CartState) => {
   if (trimmed) out.push(`Nota: ${trimmed}`);
 
   const name = customer.name.trim();
+  if (table !== null) {
+    if (name) out.push("", `Cliente: ${name}`);
+    return out.join("\n");
+  }
   const phone = customer.phone.trim();
   if (name || phone) {
     const delivery = customer.mode === "recoger";

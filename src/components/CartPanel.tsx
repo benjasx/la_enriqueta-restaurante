@@ -14,6 +14,7 @@ import { useCart } from "@/cart/useCart";
 import { CustomerForm } from "@/components/CustomerForm";
 import { money } from "@/data/menu";
 import { whatsappUrl } from "@/data/site";
+import { useTable } from "@/table/useTable";
 
 const sizeLabel = { copeo: "Copeo", botella: "Botella" } as const;
 
@@ -22,6 +23,7 @@ const stepper =
 
 export const CartPanel = ({ onClose }: { onClose: () => void }) => {
   const { state, dispatch } = useCart();
+  const { table, leaveTable } = useTable();
   const closeRef = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
   const [side] = useState(
@@ -42,7 +44,7 @@ export const CartPanel = ({ onClose }: { onClose: () => void }) => {
   }, [onClose]);
 
   const empty = state.lines.length === 0;
-  const check = validateCustomer(state.customer);
+  const check = validateCustomer(state.customer, table);
 
   const lineName = (l: CartLine) => {
     const r = resolveLine(l);
@@ -90,6 +92,18 @@ export const CartPanel = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-6">
+          {table !== null && (
+            <div className="bg-sand text-wine flex items-center justify-between gap-3 rounded-2xl px-3 py-2 text-[13px]">
+              <span className="font-semibold">Pedido para la Mesa {table}</span>
+              <button
+                type="button"
+                onClick={leaveTable}
+                className="text-muted hover:text-wine cursor-pointer border-0 bg-transparent text-[13px] underline"
+              >
+                Salir del modo mesa
+              </button>
+            </div>
+          )}
           {state.lines.length === 0 ? (
             <p className="text-body py-10 text-center text-[15px]">
               Tu pedido está vacío. Agrega algo del menú.
@@ -231,7 +245,7 @@ export const CartPanel = ({ onClose }: { onClose: () => void }) => {
             </>
           ) : (
             <a
-              href={whatsappUrl(cartMessage(state))}
+              href={whatsappUrl(cartMessage(state, table))}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green text-cream flex min-h-12 items-center justify-center rounded-full text-sm font-semibold"

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import type { Customer } from "@/cart/cartReducer";
+import { customerLimits, type Customer } from "@/cart/cartReducer";
 import { mapsUrl, validateCustomer, type CustomerField } from "@/cart/customer";
 import { useCart } from "@/cart/useCart";
+import { useTable } from "@/table/useTable";
 
 const input =
   "border-line text-ink focus:border-wine w-full rounded-2xl border-[1.5px] bg-white px-3 py-2 text-[14px] outline-none";
@@ -26,6 +27,7 @@ export const CustomerForm = () => {
     state: { customer },
     dispatch,
   } = useCart();
+  const { table } = useTable();
   const [touched, setTouched] = useState<
     Partial<Record<CustomerField, boolean>>
   >({});
@@ -58,6 +60,31 @@ export const CustomerForm = () => {
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
     );
   };
+
+  if (table !== null) {
+    return (
+      <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0 pt-4">
+        <legend className="font-display text-wine mb-1 p-0 text-lg font-semibold">
+          Tu nombre
+        </legend>
+        <label className={label}>
+          <span className={labelText}>Nombre (opcional)</span>
+          <input
+            type="text"
+            autoComplete="given-name"
+            maxLength={customerLimits.name}
+            value={customer.name}
+            onChange={(e) => set({ name: e.target.value })}
+            placeholder="Para que el mesero te identifique"
+            className={input}
+          />
+        </label>
+        <p className="text-muted m-0 text-[12px] leading-snug">
+          Guardamos tu nombre solo en tu dispositivo para tu próximo pedido.
+        </p>
+      </fieldset>
+    );
+  }
 
   return (
     <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0 pt-4">

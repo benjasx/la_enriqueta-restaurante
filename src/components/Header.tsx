@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { Ref } from "react";
 import { CartButton } from "@/components/CartButton";
 import { site } from "@/data/site";
+import { useTable } from "@/table/useTable";
 
 const links = [
   { label: "Inicio", href: "#inicio" },
@@ -19,6 +20,7 @@ export const Header = ({
   onOpenCart: () => void;
   cartButtonRef?: Ref<HTMLButtonElement>;
 }) => {
+  const { table } = useTable();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const { scrollY } = useScroll();
@@ -64,6 +66,14 @@ export const Header = ({
             ))}
           </div>
           <div className="flex items-center gap-2">
+            {table !== null && (
+              <span className="bg-wine text-cream rounded-full px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap">
+                <span aria-hidden="true" className="min-[420px]:hidden">
+                  M{table}
+                </span>
+                <span className="max-[419px]:sr-only">Mesa {table}</span>
+              </span>
+            )}
             <CartButton ref={cartButtonRef} onOpen={onOpenCart} />
             <button
               type="button"

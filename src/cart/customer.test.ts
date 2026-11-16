@@ -103,3 +103,16 @@ describe("parseMapsLocation", () => {
     );
   });
 });
+
+describe("validateCustomer in table mode", () => {
+  it("requires nothing when a table is active", () => {
+    const empty: Customer = { ...base, name: "", phone: "", address: "" };
+    const r = validateCustomer(empty, 7);
+    expect(r.ok).toBe(true);
+    expect(r.missing).toEqual([]);
+  });
+
+  it("ignores an invalid stored location in table mode", () => {
+    expect(validateCustomer({ ...base, mapsLink: "nope" }, 7).ok).toBe(true);
+  });
+});

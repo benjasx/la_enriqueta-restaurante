@@ -101,3 +101,53 @@ describe("cartMessage", () => {
     expect(cartMessage(bad)).not.toContain("Ubicación:");
   });
 });
+
+describe("cartMessage in table mode", () => {
+  const s = build([
+    { type: "add", line: { itemId: "torta-ahogada", optionLabel: "Pollo" } },
+    { type: "setNote", note: "sin cebolla" },
+    {
+      type: "setCustomer",
+      customer: {
+        name: "Ana",
+        phone: "311 123 4567",
+        mode: "domicilio",
+        address: "Calle Brasil 120, Moctezuma",
+        mapsLink: "21.5041, -104.8945",
+      },
+    },
+  ]);
+
+  it("puts the table first and omits delivery data", () => {
+    expect(cartMessage(s, 7)).toBe(
+      [
+        "¡Hola La Enriqueta! Pedido para la MESA 7:",
+        "- 1 × Torta Ahogada Estilo Tuxpan – Pollo (1 pieza) – $80 MXN",
+        "",
+        "Total: $80 MXN",
+        "Nota: sin cebolla",
+        "",
+        "Cliente: Ana",
+      ].join("\n"),
+    );
+  });
+
+  it("omits the note and client block when empty", () => {
+    const bare = build([
+      { type: "add", line: { itemId: "torta-ahogada", optionLabel: "Pollo" } },
+    ]);
+    expect(cartMessage(bare, 3)).toBe(
+      [
+        "¡Hola La Enriqueta! Pedido para la MESA 3:",
+        "- 1 × Torta Ahogada Estilo Tuxpan – Pollo (1 pieza) – $80 MXN",
+        "",
+        "Total: $80 MXN",
+      ].join("\n"),
+    );
+  });
+
+  it("keeps the normal format without a table", () => {
+    expect(cartMessage(s)).toContain("Quiero hacer este pedido:");
+    expect(cartMessage(s)).toContain("Teléfono: 311 123 4567");
+  });
+});
