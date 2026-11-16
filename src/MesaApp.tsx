@@ -4,10 +4,12 @@ import { CartProvider } from "@/cart/CartContext";
 import { CartButton } from "@/components/CartButton";
 import { CartPanel } from "@/components/CartPanel";
 import { CartToast } from "@/components/CartToast";
-import { KaraokeBanner } from "@/components/KaraokeBanner";
-import { Menu } from "@/components/Menu";
+import { MesaCartBar } from "@/components/MesaCartBar";
 import { MesaHeader } from "@/components/MesaHeader";
+import { MesaHero } from "@/components/MesaHero";
+import { MesaKaraoke } from "@/components/MesaKaraoke";
 import { MesaLocked } from "@/components/MesaLocked";
+import { MesaMenu } from "@/components/MesaMenu";
 import { readAccess } from "@/table/tableSession";
 import { TableContext } from "@/table/useTable";
 
@@ -25,23 +27,33 @@ export const MesaApp = () => {
     cartButtonRef.current?.focus();
   }, []);
 
-  if (table === null) return <MesaLocked />;
+  if (table === null) {
+    return (
+      <div className="mesa-theme">
+        <MesaLocked />
+      </div>
+    );
+  }
 
   return (
-    <TableContext value={{ table }}>
-      <CartProvider>
-        <MesaHeader table={table}>
-          <CartButton ref={cartButtonRef} onOpen={() => setCartOpen(true)} />
-        </MesaHeader>
-        <main>
-          <Menu />
-          <KaraokeBanner />
-        </main>
-        <CartToast hidden={cartOpen} />
-        <AnimatePresence>
-          {cartOpen && <CartPanel onClose={closeCart} />}
-        </AnimatePresence>
-      </CartProvider>
-    </TableContext>
+    <div className="mesa-theme">
+      <TableContext value={{ table }}>
+        <CartProvider>
+          <MesaHeader table={table}>
+            <CartButton ref={cartButtonRef} onOpen={() => setCartOpen(true)} />
+          </MesaHeader>
+          <main>
+            <MesaHero />
+            <MesaMenu />
+            <MesaKaraoke />
+          </main>
+          <MesaCartBar hidden={cartOpen} onOpen={() => setCartOpen(true)} />
+          <CartToast hidden={cartOpen} />
+          <AnimatePresence>
+            {cartOpen && <CartPanel onClose={closeCart} />}
+          </AnimatePresence>
+        </CartProvider>
+      </TableContext>
+    </div>
   );
 };

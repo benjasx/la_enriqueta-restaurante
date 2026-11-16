@@ -5,6 +5,8 @@
 > **Fecha:** 2026-11-16
 > **Objetivo:** Hacer que el QR de cada mesa, impreso en una tarjeta de 1500 × 1500 px con la marca de La Enriqueta, abra una página oculta (`mesa.html`) con solo el menú, el banner de Viernes de Karaoke y el carrito en modo mesa, accesible únicamente con el código secreto que lleva ese QR y no desde el sitio principal.
 
+> **Nota (2026-11-16):** la SPEC 08 **revoca** de esta spec, solo para la página de mesa: la exclusión del Hero, el uso de `Menu` (11 pestañas con filtro) y `KaraokeBanner` (se sustituyen por `MesaMenu` y `MesaKaraoke`) y el criterio de "ningún enlace" (ahora hay enlaces de ancla internos, pero sigue sin enlaces a otras páginas). Se conserva el acceso con código, la insignia "Mesa N", el carrito en modo mesa y la exclusión de Galería, Contacto, pie y navegación.
+
 ## Por qué existe esta spec
 
 La SPEC 06 dejó los QR como archivos sueltos y activó el modo mesa con `/?mesa=N` en el propio sitio público. Eso tiene dos problemas: un QR pelado no invita a escanearlo ni dice a qué mesa corresponde, y el sitio principal (Hero, Nosotros, Galería, Contacto…) es demasiado para un cliente que ya está sentado y solo quiere pedir. Esta spec hace dos cosas:

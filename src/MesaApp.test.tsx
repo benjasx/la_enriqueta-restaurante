@@ -1,4 +1,10 @@
-import { render, screen, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, vi } from "vitest";
 import { MesaApp } from "@/MesaApp";
@@ -25,12 +31,46 @@ describe("MesaApp access", () => {
     access(7);
     render(<MesaApp />);
     expect(screen.getByText("Mesa 7")).toBeInTheDocument();
-    expect(screen.getAllByRole("tab")).toHaveLength(11);
+    expect(
+      within(
+        screen.getByRole("group", { name: /categorías del menú/i }),
+      ).getAllByRole("link"),
+    ).toHaveLength(11);
     expect(
       screen.getByRole("region", { name: /viernes de karaoke/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /ver pedido/i }),
+      screen.getByRole("button", { name: /^ver pedido:/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("orders header, hero, menu and karaoke band", () => {
+    access(7);
+    const { container } = render(<MesaApp />);
+    const hero = screen.getByRole("heading", {
+      level: 1,
+      name: "¿Qué se te antoja hoy?",
+    });
+    const header = container.querySelector("header")!;
+    const menu = container.querySelector("#menu")!;
+    const karaoke = container.querySelector("#karaoke")!;
+    const before = (a: Element, b: Element) =>
+      Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(before(header, hero)).toBe(true);
+    expect(before(hero, menu)).toBe(true);
+    expect(before(menu, karaoke)).toBe(true);
+    expect(screen.getByRole("link", { name: "Ver el menú" })).toHaveAttribute(
+      "href",
+      "#menu",
+    );
+    expect(
+      screen.getByRole("link", { name: "Viernes de karaoke" }),
+    ).toHaveAttribute("href", "#karaoke");
+    expect(
+      screen.getByRole("link", { name: "Ver coctelería" }),
+    ).toHaveAttribute("href", "#cocteleria");
+    expect(
+      within(hero.closest("section")!).getByRole("img", { name: "Pozole" }),
     ).toBeInTheDocument();
   });
 
@@ -49,6 +89,9 @@ describe("MesaApp access", () => {
     expect(locked()).toBeInTheDocument();
     expect(screen.queryAllByRole("tab")).toHaveLength(0);
     expect(screen.queryByRole("region")).toBeNull();
+    expect(
+      screen.queryByRole("heading", { name: "¿Qué se te antoja hoy?" }),
+    ).toBeNull();
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
     expect(screen.queryByText(/^Mesa \d+$/)).toBeNull();
@@ -90,12 +133,14 @@ describe("MesaApp access", () => {
       /pásale a ver/i,
       /te esperamos/i,
       /aquí te esperamos/i,
+      /^galería$/i,
     ]) {
       expect(screen.queryByText(text)).toBeNull();
     }
     expect(screen.queryByRole("contentinfo")).toBeNull();
     expect(screen.queryByRole("navigation")).toBeNull();
-    expect(container.querySelector("a")).toBeNull();
+    // SPEC 08: solo enlaces de ancla internos, ninguno a otras páginas.
+    expect(container.querySelector('a:not([href^="#"])')).toBeNull();
     expect(container.querySelector("#inicio")).toBeNull();
   });
 });
@@ -117,7 +162,9 @@ describe("MesaApp ordering", () => {
     await userEvent.click(
       screen.getAllByRole("button", { name: /pedir|agregar/i })[0],
     );
-    await userEvent.click(screen.getByRole("button", { name: /ver pedido/i }));
+    await userEvent.click(
+      screen.getByRole("button", { name: /^ver pedido:/i }),
+    );
 
     const dialog = screen.getByRole("dialog", { name: /tu pedido/i });
     expect(dialog).toHaveTextContent("Pedido para la Mesa 7");
@@ -156,9 +203,46 @@ describe("MesaApp ordering", () => {
   it("keeps the send button disabled while the cart is empty", async () => {
     access(2);
     render(<MesaApp />);
-    await userEvent.click(screen.getByRole("button", { name: /ver pedido/i }));
+    await userEvent.click(
+      screen.getByRole("button", { name: /^ver pedido:/i }),
+    );
     expect(
       screen.getByRole("button", { name: /enviar pedido por whatsapp/i }),
     ).toBeDisabled();
+  });
+});
+
+describe("MesaApp cart bar", () => {
+  const add = (container: HTMLElement, label: string) =>
+    fireEvent.click(
+      container.querySelector<HTMLButtonElement>(
+        `button[aria-label^="${label}"]`,
+      )!,
+    );
+
+  it("shows the bar only with items, opens the panel and clears the cart", async () => {
+    access(7);
+    const { container } = render(<MesaApp />);
+    expect(screen.queryByText("Vaciar")).toBeNull();
+
+    add(container, "Agregar Pozole Mediano");
+    add(container, "Agregar Pozole Mediano");
+    add(container, "Agregar Whisky Black Label Botella");
+    expect(screen.getByText("3 productos")).toBeInTheDocument();
+    expect(screen.getByText("$2,759 MXN")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Ver pedido" }));
+    const dialog = screen.getByRole("dialog", { name: /tu pedido/i });
+    expect(dialog).toHaveTextContent("Pedido para la Mesa 7");
+    expect(screen.queryByText("Vaciar")).toBeNull();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(screen.getByText("Vaciar")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("Vaciar"));
+    expect(screen.queryByText("Vaciar")).toBeNull();
+    add(container, "Agregar Pozole Mediano");
+    expect(screen.getByText("1 producto")).toBeInTheDocument();
   });
 });

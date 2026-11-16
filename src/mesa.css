@@ -1,0 +1,39 @@
+/* Tema solo de la página de mesa (SPEC 08): tipografía y paleta del diseño de
+   Claude Design. Se aplica con la clase .mesa-theme en el elemento raíz de
+   MesaApp; el sitio principal no importa este archivo. */
+.mesa-theme {
+  --font-display: "Young Serif", serif;
+  --font-sans: "Figtree", system-ui, sans-serif;
+  --color-wine: #a8185a;
+  --color-orange: #d9622b;
+  --color-green: #2f6b3a;
+  --color-gold: #d4a63a;
+  --color-ink: #3a1d22;
+  --color-body: #5a3a3f;
+  --color-muted: #8a6f72;
+  --color-cream: #fcf6ef;
+  --color-sand: #f3e6d9;
+  --color-line: #ecdccb;
+
+  min-height: 100dvh;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Pestañas pegajosas: el salto a cada sección deja libre el encabezado. */
+html {
+  scroll-padding-top: 150px;
+  scroll-behavior: smooth;
+}
+
+/* index.css añade scroll-margin-top a section[id]; aquí ya lo cubre scroll-padding-top. */
+section[id] {
+  scroll-margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
