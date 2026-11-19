@@ -129,6 +129,7 @@ export const menu: MenuItem[] = [
   {
     id: "chicharron-salsa-roja",
     category: "fuertes",
+    image: "/img/chicharron-salsa-roja.webp",
     name: "Chicharrón en Salsa Roja",
     description:
       "Chicharrón de cerdo en su punto, bañado en nuestra salsa roja especial de chiles secos.",
@@ -263,6 +264,8 @@ export const menu: MenuItem[] = [
       "Caldito con maíz cacahuazintle, carnita de cerdo y pollo. Acompañado de lechuga o repollo, rábanos, pepino, cebolla, orégano y tostadas doradas.",
     note: "Opciones: pollo, pierna, pata, cabeza, lengua y/o surtido.",
     options: [
+      { label: "Mini", price: 80 },
+      { label: "Chico", price: 100 },
       { label: "Mediano", price: 130 },
       { label: "Grande", price: 160 },
     ],
@@ -297,6 +300,7 @@ export const menu: MenuItem[] = [
   {
     id: "gorditas",
     category: "entradas",
+    image: "/img/gorditas.webp",
     name: "Gorditas Estilo Tuxpan",
     description: "Disfruta nuestras gorditas en su versión suave o dorada.",
     unit: "5 piezas",
@@ -317,8 +321,8 @@ export const menu: MenuItem[] = [
       "Tortillas de harina rellenas de pollo o pierna, acompañadas de verdura y salsa.",
     unit: "1 pieza",
     options: [
-      { label: "Pollo", price: 40 },
-      { label: "Pierna", price: 45 },
+      { label: "Pollo", price: 75 },
+      { label: "Pierna", price: 80 },
     ],
   },
   {
@@ -329,15 +333,16 @@ export const menu: MenuItem[] = [
     description: "Clásica quesadilla de harina, acompáñala a tu gusto.",
     unit: "1 pieza",
     options: [
-      { label: "Panela", price: 40 },
-      { label: "Queso", price: 40 },
-      { label: "Pollo", price: 45 },
-      { label: "Pierna", price: 50 },
+      { label: "Panela", price: 70 },
+      { label: "Queso", price: 60 },
+      { label: "Pollo", price: 75 },
+      { label: "Pierna", price: 80 },
     ],
   },
   {
     id: "quesadilla-maiz",
     category: "entradas",
+    image: "/img/quesadilla_ma.webp",
     name: "Quesadilla de Maíz",
     description: "Quesadilla de maíz, a la plancha o frita.",
     unit: "1 pieza",
@@ -420,6 +425,7 @@ export const menu: MenuItem[] = [
     id: "sincronizadas",
     category: "tradicionales",
     name: "Sincronizadas",
+    image: "/img/sincronizada.webp",
     description:
       "Tortilla de harina rellena de queso, jamón y ingredientes al gusto.",
     unit: "1 pieza",
@@ -449,6 +455,7 @@ export const menu: MenuItem[] = [
   {
     id: "papa-dorada",
     category: "extras",
+    image: "/img/papa.webp",
     name: "Papa Dorada",
     description: "Papa dorada para acompañar.",
     options: [
@@ -507,6 +514,7 @@ export const menu: MenuItem[] = [
   {
     id: "arroz-con-leche",
     category: "postres",
+    image: "/img/arroz-leche.webp",
     name: "Arroz con leche",
     description: "Arroz con leche.",
     price: 55,
@@ -522,6 +530,7 @@ export const menu: MenuItem[] = [
   {
     id: "empanadas-requeson",
     category: "postres",
+    image: "/img/empanadas_requeson.webp",
     name: "Empanadas de requesón dulce",
     description: "Empanadas rellenas de requesón dulce.",
     price: 45,
