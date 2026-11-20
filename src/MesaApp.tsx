@@ -1,6 +1,7 @@
 import { AnimatePresence } from "motion/react";
 import { useCallback, useRef, useState } from "react";
 import { CartProvider } from "@/cart/CartContext";
+import { BurroBanner } from "@/components/BurroBanner";
 import { CartButton } from "@/components/CartButton";
 import { CartPanel } from "@/components/CartPanel";
 import { CartToast } from "@/components/CartToast";
@@ -44,6 +45,7 @@ export const MesaApp = () => {
           </MesaHeader>
           <main>
             <MesaHero />
+            <BurroBanner menuHref="#especialidades" />
             <MesaMenu />
             <MesaKaraoke />
           </main>

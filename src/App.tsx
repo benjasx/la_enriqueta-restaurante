@@ -2,6 +2,7 @@ import { AnimatePresence } from "motion/react";
 import { useCallback, useRef, useState } from "react";
 import { CartProvider } from "@/cart/CartContext";
 import { About } from "@/components/About";
+import { BurroBanner } from "@/components/BurroBanner";
 import { CartPanel } from "@/components/CartPanel";
 import { CartToast } from "@/components/CartToast";
 import { Contact } from "@/components/Contact";
@@ -30,6 +31,7 @@ export const App = () => {
       />
       <main>
         <Hero />
+        <BurroBanner menuHref="#menu" />
         <Menu />
         <KaraokeBanner />
         <MichePromoBanner />

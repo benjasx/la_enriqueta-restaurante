@@ -25,21 +25,21 @@ describe("App", () => {
   it("filters the menu by category", async () => {
     render(<App />);
     expect(screen.getAllByRole("tab")).toHaveLength(11);
-    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
     await userEvent.click(
       screen.getByRole("tab", { name: /antojitos tradicionales/i }),
     );
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(7);
   });
 
-  it("shows all 57 menu items across the tabs", async () => {
+  it("shows all 58 menu items across the tabs", async () => {
     render(<App />);
     let total = 0;
     for (const tab of screen.getAllByRole("tab")) {
       await userEvent.click(tab);
       total += screen.getAllByRole("heading", { level: 3 }).length;
     }
-    expect(total).toBe(57);
+    expect(total).toBe(58);
   });
 
   it("adds liquor by glass or bottle to the cart with the exact price", async () => {

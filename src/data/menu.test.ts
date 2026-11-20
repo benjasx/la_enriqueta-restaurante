@@ -19,7 +19,7 @@ describe("menu data", () => {
     expect(count("fuertes")).toBe(5);
     expect(count("desayunos")).toBe(4);
     expect(count("kids")).toBe(3);
-    expect(menu).toHaveLength(57);
+    expect(menu).toHaveLength(58);
   });
 
   it("lists the corn quesadilla fillings as single-choice options", () => {

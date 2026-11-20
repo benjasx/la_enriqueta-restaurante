@@ -76,6 +76,16 @@ export const menu: MenuItem[] = [
     price: 180,
   },
   {
+    id: "burro-sarabia",
+    category: "especialidades",
+    image: "/img/burro-sarabia.webp",
+    name: "Burro Sarabia",
+    description:
+      "Burro de tortilla de harina, doradito por fuera y bien servido por dentro, con pollo, bistec, queso, frijolitos y aguacate. Lo servimos con ensalada fresca, cebollita curtida y salsa roja.",
+    note: "Incluye ensalada de lechuga, zanahoria, pepino y cebolla curtida, con salsa roja al lado. Bebida por separado.",
+    price: 189,
+  },
+  {
     id: "torta-ahogada",
     category: "especialidades",
     image: "/img/torta.webp",
@@ -96,6 +106,7 @@ export const menu: MenuItem[] = [
       "4 piezas de pollo dorado, acompañado con ensalada, papa dorada y arroz a la mexicana.",
     price: 160,
   },
+
   {
     id: "bistec-mexicana",
     category: "fuertes",
