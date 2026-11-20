@@ -109,7 +109,7 @@ describe("Cart UI", () => {
 
     const send = screen.getByRole("link", { name: /enviar pedido/i });
     const href = send.getAttribute("href") ?? "";
-    expect(href.startsWith("https://wa.me/523111397571?text=")).toBe(true);
+    expect(href.startsWith("https://wa.me/523115130988?text=")).toBe(true);
     const text = decodeURIComponent(href.split("?text=")[1]);
     expect(text).toContain("- 2 × Pozole – Mediano – $260 MXN");
     expect(text).toContain("- 1 × Whisky – Black Label – Botella – $2,499 MXN");

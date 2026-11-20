@@ -183,7 +183,7 @@ describe("MesaApp ordering", () => {
       name: /enviar pedido por whatsapp/i,
     });
     const href = send.getAttribute("href") ?? "";
-    expect(href.startsWith("https://wa.me/523111397571?text=")).toBe(true);
+    expect(href.startsWith("https://wa.me/523115130988?text=")).toBe(true);
     const text = decodeURIComponent(href.split("?text=")[1]);
     expect(text.startsWith("¡Hola La Enriqueta! Pedido para la MESA 7:")).toBe(
       true,

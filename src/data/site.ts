@@ -5,7 +5,7 @@ export const site = {
   addressLines: ["C. Brasil 261, Col. Moctezuma", "Tepic, Nayarit"],
   phone: "523115130988",
   phoneLabel: "311 513 0988",
-  whatsapp: "523111397571",
+  whatsapp: "523115130988",
   socials: [
     {
       id: "facebook",

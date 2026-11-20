@@ -133,7 +133,7 @@ Archivos que aparecen o cambian:
 - [ ] Con una mesa guardada, abrir `?mesa=99` conserva la mesa anterior.
 - [ ] En modo mesa el panel no muestra teléfono, domicilio, ubicación ni el selector Domicilio/Recoger; solo "Nombre (opcional)".
 - [ ] En modo mesa con carrito no vacío, el botón "Enviar pedido por WhatsApp" está habilitado sin escribir nada; con carrito vacío sigue deshabilitado.
-- [ ] El enlace de envío empieza con `https://wa.me/523111397571?text=` y su texto decodificado empieza con `¡Hola La Enriqueta! Pedido para la MESA 7:`.
+- [ ] El enlace de envío empieza con `https://wa.me/523115130988?text=` y su texto decodificado empieza con `¡Hola La Enriqueta! Pedido para la MESA 7:`.
 - [ ] El mensaje en modo mesa no contiene `Teléfono:`, `Entrega:`, `Domicilio:` ni `Ubicación:`, aunque haya datos de esos campos en `localStorage`.
 - [ ] El mensaje trae `Cliente: {nombre}` solo si se escribió un nombre y `Nota:` solo si hay nota.
 - [ ] Sin mesa activa, el mensaje y la validación son idénticos a los de la SPEC 04 (los tests existentes pasan sin cambios de expectativa).

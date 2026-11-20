@@ -129,7 +129,7 @@ Archivos que aparecen o cambian:
 - [ ] La banda de karaoke muestra el flyer `/img/karaoke.webp` con texto alternativo "Viernes de Karaoke…", "Todos los viernes" y "Ver coctelería", que salta a `#cocteleria`.
 - [ ] La barra flotante no se ve con el carrito vacío; con productos muestra "N producto(s)" y el total en MXN, y no se ve con el panel abierto.
 - [ ] "Ver pedido" de la barra abre el `CartPanel` ("Pedido para la Mesa N", solo "Nombre (opcional)"); "Vaciar" deja el carrito en 0 líneas.
-- [ ] El enlace de envío empieza con `https://wa.me/523111397571?text=`, su texto empieza con `¡Hola La Enriqueta! Pedido para la MESA N:` y no contiene `Teléfono:`, `Entrega:`, `Domicilio:`, `Ubicación:` ni el código secreto.
+- [ ] El enlace de envío empieza con `https://wa.me/523115130988?text=`, su texto empieza con `¡Hola La Enriqueta! Pedido para la MESA N:` y no contiene `Teléfono:`, `Entrega:`, `Domicilio:`, `Ubicación:` ni el código secreto.
 - [ ] La página no tiene enlaces a otras páginas ni al sitio principal: todos sus enlaces son de ancla (`href` que empieza con `#`) y los de WhatsApp del panel.
 - [ ] `src/data/menu.ts` no cambia y un cambio de precio ahí se refleja en `MesaMenu` y en el mensaje sin tocar la página.
 - [ ] A 375 px la página no tiene scroll horizontal, la barra de pestañas se desplaza horizontalmente por dentro, y el encabezado, la barra flotante y el panel no se superponen.

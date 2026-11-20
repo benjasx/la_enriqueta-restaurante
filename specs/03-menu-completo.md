@@ -154,7 +154,7 @@ Asignación de fotos (el resto queda con placeholder):
 - [ ] Todos los precios de `specs/menu-la-enriqueta.md` aparecen en pantalla con su valor exacto (por ejemplo, Pozole Mediano $130 y Grande $160; Margarita la Mexicana $119; Stella $60; Black Label copeo $170 y botella $2,499).
 - [ ] No existen `names` ni `priceRange` en `src/data/menu.ts` ni se muestran rangos de precio.
 - [ ] Mocktails tiene 7 filas de $89; Tragos Clásicos 12 filas de $99; Cervezas Comerciales 14 filas con su precio.
-- [ ] Cada fila abre `https://wa.me/523111397571?text=…` con producto, variedad, porción (si hay) y precio exacto; en licores el mensaje dice "Copeo" o "Botella" con su precio.
+- [ ] Cada fila abre `https://wa.me/523115130988?text=…` con producto, variedad, porción (si hay) y precio exacto; en licores el mensaje dice "Copeo" o "Botella" con su precio.
 - [ ] "Miche Poderosa" aparece una sola vez y "Piña Colada" aparece sin descripción.
 - [ ] Las filas de licores con botella muestran dos botones; "Whisky de la casa", "Tequila de la Casa" y "Mezcal de la Casa" solo muestran copeo.
 - [ ] El texto de recomendación del documento aparece al pie del menú.

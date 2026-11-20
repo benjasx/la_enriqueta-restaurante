@@ -188,7 +188,7 @@ Archivos que aparecen o cambian:
 - [ ] El botón + se deshabilita en 20; el botón − en 1 elimina la línea.
 - [ ] El total del panel es la suma exacta de `cantidad × precio unitario` de todas las líneas.
 - [ ] El mensaje de WhatsApp coincide con el formato del modelo de datos: producto, variedad, porción (si hay), subtotal, total y nota solo si existe.
-- [ ] El enlace de envío empieza con `https://wa.me/523111397571?text=` y el botón está deshabilitado con el carrito vacío.
+- [ ] El enlace de envío empieza con `https://wa.me/523115130988?text=` y el botón está deshabilitado con el carrito vacío.
 - [ ] El aviso +18 aparece solo si hay al menos una línea de `cocteleria` o `licores`.
 - [ ] Al pulsar cualquier botón de agregar aparece un toast "Agregado: {producto}" (con variedad y Copeo/Botella si aplica) que desaparece solo a los 2 s.
 - [ ] Agregar dos veces seguidas reinicia el toast con el producto más reciente, sin apilar toasts.

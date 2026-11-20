@@ -194,7 +194,7 @@ Página oculta de mesa (pendiente):
 - [ ] `dist/index.html` no contiene `mesa.html`, y no hay enlaces, `sitemap` ni `robots.txt` del sitio que mencionen `mesa.html`.
 - [ ] El código secreto no aparece en ningún archivo del repo; solo en `.env.local` (ignorado), en Netlify y en los QR impresos. `.env.example` tiene `VITE_MESA_KEY=` vacío.
 - [ ] Agregar un producto en la página de mesa y abrir el carrito muestra "Pedido para la Mesa 7", solo "Nombre (opcional)" (sin teléfono, domicilio, ubicación ni selector de entrega), y el botón de enviar habilitado con carrito no vacío.
-- [ ] El enlace de envío empieza con `https://wa.me/523111397571?text=`, su texto decodificado empieza con `¡Hola La Enriqueta! Pedido para la MESA 7:` y no contiene `Teléfono:`, `Entrega:`, `Domicilio:`, `Ubicación:` ni el código secreto.
+- [ ] El enlace de envío empieza con `https://wa.me/523115130988?text=`, su texto decodificado empieza con `¡Hola La Enriqueta! Pedido para la MESA 7:` y no contiene `Teléfono:`, `Entrega:`, `Domicilio:`, `Ubicación:` ni el código secreto.
 - [ ] El panel del carrito no tiene el botón "Salir del modo mesa".
 - [ ] En el sitio principal, `/?mesa=7` no muestra chip, franja ni cambios en el carrito, que sigue pidiendo nombre, teléfono y domicilio como en la SPEC 04.
 - [ ] El script `generate:qrs` sin `--url`, sin `--key` o con una clave de menos de 16 o más de 32 caracteres, o con caracteres fuera de `[A-Za-z0-9_-]`, termina con código distinto de 0 y un mensaje que lo explica.
