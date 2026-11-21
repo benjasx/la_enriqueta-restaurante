@@ -23,7 +23,7 @@ export const site = {
       url: "https://www.tiktok.com/@laenriquetatepic",
     },
   ],
-  tables: 20, // mesas numeradas 1..tables (QR en modo mesa)
+  tables: 30, // mesas numeradas 1..tables (QR en modo mesa)
   mapsEmbedUrl:
     "https://maps.google.com/maps?q=C.%20Brasil%20261%2C%20Moctezuma%2C%20Tepic%2C%20Nayarit&z=16&output=embed",
   hours: [

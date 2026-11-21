@@ -10,7 +10,7 @@
 //   npm run generate:qrs -- --url=https://tudominio.com --key=CODIGO
 //   npm run generate:qrs -- --url=https://tudominio.com --key=CODIGO --tables=20
 //
-// --key: 16 a 32 caracteres [A-Za-z0-9_-]. --tables debe coincidir con `site.tables` en src/data/site.ts (por defecto 20).
+// --key: 16 a 32 caracteres [A-Za-z0-9_-]. --tables debe coincidir con `site.tables` en src/data/site.ts (por defecto 30).
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import QRCode from "qrcode";
@@ -52,7 +52,7 @@ if (!/^[A-Za-z0-9_-]{16,32}$/.test(key)) {
   fail("--key debe tener de 16 a 32 caracteres: letras, números, _ o -");
 }
 
-const tables = Number(arg("tables") ?? 20);
+const tables = Number(arg("tables") ?? 30);
 if (!Number.isInteger(tables) || tables < 1) {
   fail("--tables debe ser un entero mayor o igual a 1");
 }
