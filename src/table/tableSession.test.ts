@@ -43,7 +43,7 @@ describe("readAccess", () => {
   });
 
   it("uses site.tables as the default maximum", () => {
-    expect(readAccess(`?k=${KEY}&n=20`, KEY)).toBe(20);
-    expect(readAccess(`?k=${KEY}&n=21`, KEY)).toBeNull();
+    expect(readAccess(`?k=${KEY}&n=30`, KEY)).toBe(30);
+    expect(readAccess(`?k=${KEY}&n=31`, KEY)).toBeNull();
   });
 });

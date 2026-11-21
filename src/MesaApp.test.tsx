@@ -80,7 +80,7 @@ describe("MesaApp access", () => {
     ["no code", `?n=7`],
     ["a code without n", `?k=${KEY}`],
     ["n = 0", `?k=${KEY}&n=0`],
-    ["n = 21", `?k=${KEY}&n=21`],
+    ["n = 31", `?k=${KEY}&n=31`],
     ["n = 07", `?k=${KEY}&n=07`],
     ["n = abc", `?k=${KEY}&n=abc`],
   ])("shows only the neutral screen with %s", (_name, search) => {

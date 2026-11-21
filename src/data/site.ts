@@ -32,7 +32,6 @@ export const site = {
       time: "8:00 am – 10:30 pm",
       open: true,
     },
-    { days: "Lunes", time: "Cerrado", open: false },
   ],
 };
 
