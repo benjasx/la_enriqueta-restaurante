@@ -17,7 +17,7 @@ describe("menu data", () => {
   it("keeps the new categories filled", () => {
     const count = (id: string) => menu.filter((m) => m.category === id).length;
     expect(count("fuertes")).toBe(5);
-    expect(count("desayunos")).toBe(4);
+    expect(count("desayunos")).toBe(5);
     expect(count("kids")).toBe(3);
     expect(menu).toHaveLength(58);
   });

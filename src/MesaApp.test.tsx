@@ -77,6 +77,11 @@ describe("MesaApp access", () => {
       screen.getByRole("img", { name: /tragos 2x1/i }),
     ).toBeInTheDocument();
     expect(
+      within(document.querySelector("section#ofertas")!).getByRole("heading", {
+        name: /promociones de tamales/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
       screen.getByRole("link", { name: "Ver coctelería" }),
     ).toHaveAttribute("href", "#cocteleria");
     expect(

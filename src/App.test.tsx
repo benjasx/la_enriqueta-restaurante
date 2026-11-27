@@ -103,7 +103,7 @@ describe("App", () => {
     await userEvent.click(
       screen.getByRole("tab", { name: /desayunos y molletes/i }),
     );
-    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(5);
     await userEvent.click(
       screen.getByRole("button", {
         name: /agregar promociones de tamales desayuno para 2/i,

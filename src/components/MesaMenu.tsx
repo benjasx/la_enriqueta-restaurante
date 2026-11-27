@@ -20,7 +20,7 @@ const platillos = (n: number) => `${n} ${n === 1 ? "platillo" : "platillos"}`;
 const addButton =
   "min-w-[88px] cursor-pointer rounded-full border-0 px-3 py-2 text-[13px] font-semibold whitespace-nowrap disabled:cursor-not-allowed";
 
-const Dish = ({ d }: { d: MenuItem }) => {
+export const Dish = ({ d }: { d: MenuItem }) => {
   const { state, dispatch } = useCart();
   const rows = d.options ?? [{ label: "", price: d.price ?? 0 }];
   const dual = rows.some((r) => r.bottlePrice !== undefined);

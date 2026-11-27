@@ -250,6 +250,14 @@ export const menu: MenuItem[] = [
     ],
   },
   {
+    id: "empanadas-requeson",
+    category: "desayunos",
+    image: "/img/empanadas_requeson.webp",
+    name: "Empanadas de requesón dulce",
+    description: "Empanadas rellenas de requesón dulce.",
+    price: 45,
+  },
+  {
     id: "kids-sincronizadas",
     category: "kids",
     image: "/img/sincronizada.webp",
@@ -544,14 +552,6 @@ export const menu: MenuItem[] = [
     name: "Postre del día",
     description: "Pregunta por el postre del día.",
     price: 99,
-  },
-  {
-    id: "empanadas-requeson",
-    category: "postres",
-    image: "/img/empanadas_requeson.webp",
-    name: "Empanadas de requesón dulce",
-    description: "Empanadas rellenas de requesón dulce.",
-    price: 45,
   },
   {
     id: "aguas-frescas",

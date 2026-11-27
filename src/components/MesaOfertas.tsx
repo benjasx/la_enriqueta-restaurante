@@ -1,3 +1,8 @@
+import { Dish } from "@/components/MesaMenu";
+import { menu } from "@/data/menu";
+
+const tamales = menu.find((d) => d.offer);
+
 const promos = [
   {
     src: "/img/promo_miche.webp",
@@ -43,6 +48,11 @@ export const MesaOfertas = () => (
           </figure>
         ))}
       </div>
+      {tamales && (
+        <div className="mt-10 grid">
+          <Dish d={tamales} />
+        </div>
+      )}
     </div>
   </section>
 );
