@@ -22,7 +22,7 @@ export const About = () => (
             Nosotros
           </div>
           <h2 className="font-display m-0 mb-6 text-[clamp(34px,4.6vw,54px)] leading-[1.02] font-semibold tracking-[-0.02em] text-balance">
-            Sazón de Tuxpan, servido en Tepic
+            Antojitos Tuxpeños
           </h2>
         </Reveal>
         <p className="m-0 max-w-[560px] text-[clamp(17px,1.8vw,20px)] leading-[1.6] text-pretty text-[#f5e6da]">

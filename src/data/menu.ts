@@ -9,7 +9,8 @@ export type CategoryId =
   | "licores"
   | "fuertes"
   | "desayunos"
-  | "kids";
+  | "kids"
+  | "ofertas";
 
 export type PriceOption = {
   label: string;
@@ -29,6 +30,10 @@ export type MenuItem = {
   options?: PriceOption[];
   note?: string;
   wide?: boolean;
+  // Aparece también en la pestaña "Promociones" del menú web.
+  offer?: boolean;
+  // Anuncio sin precio ni botón de pedido (promos 2x1 que se piden en mesa).
+  info?: boolean;
 };
 
 export const categories: { id: CategoryId; label: string }[] = [
@@ -214,10 +219,10 @@ export const menu: MenuItem[] = [
     id: "tamales",
     category: "desayunos",
     image: "/img/tamal.webp",
-    name: "Tamales Tradicionales",
+    name: "Tamales Tradicionales (Dorados)",
     description: "Receta casera al vapor.",
     options: [
-      { label: "Pollo con salsa verde", price: 50 },
+      { label: "Pollo con salsa Roja", price: 50 },
       { label: "Cerdo con adobo especial", price: 50 },
     ],
   },
@@ -225,8 +230,10 @@ export const menu: MenuItem[] = [
     id: "promociones-tamales",
     category: "desayunos",
     name: "Promociones de Tamales",
+    image: "/img/tama.webp",
     description: "El antojo perfecto para comenzar el día.",
     wide: true,
+    offer: true,
     options: [
       { label: "Tamal + Café con refill", price: 85 },
       { label: "Tamal + Champurrado", price: 85 },
@@ -318,6 +325,7 @@ export const menu: MenuItem[] = [
     options: [
       { label: "Papa", price: 70 },
       { label: "Pollo", price: 80 },
+      { label: "Gallina", price: 75 },
       { label: "Pierna", price: 85 },
       { label: "Camarón seco molido", price: 80 },
       { label: "Picadillo mixto", price: 85 },
@@ -345,7 +353,7 @@ export const menu: MenuItem[] = [
     unit: "1 pieza",
     options: [
       { label: "Panela", price: 70 },
-      { label: "Queso", price: 60 },
+      { label: "Queso", price: 50 },
       { label: "Pollo", price: 75 },
       { label: "Pierna", price: 80 },
     ],
@@ -400,7 +408,6 @@ export const menu: MenuItem[] = [
       { label: "Camarón seco", price: 75 },
       { label: "Camarón fresco", price: 75 },
       { label: "Picadillo", price: 75 },
-      { label: "Demolida", price: 75 },
       { label: "Chanfaina", price: 60 },
     ],
   },
@@ -564,7 +571,12 @@ export const menu: MenuItem[] = [
 
     name: "Limonadas y Naranjadas",
     description: "Bebidas de la casa, naturales o minerales.",
-    price: 60,
+    options: [
+      { label: "Limonada natural", price: 60 },
+      { label: "Limonada mineral", price: 60 },
+      { label: "Naranjada natural", price: 60 },
+      { label: "Naranjada mineral", price: 60 },
+    ],
   },
   {
     id: "bebidas-calientes",
@@ -858,4 +870,53 @@ export const menu: MenuItem[] = [
       { label: "Copa de vino de la casa", price: 80 },
     ],
   },
+];
+
+// Coctelería, cervezas, vinos y licores solo se piden desde el menú por mesa
+// (mesa.html); no aparecen en el menú general de la página principal.
+export const tableOnlyCategories: CategoryId[] = ["cocteleria", "licores"];
+
+const webBase = categories.filter((c) => !tableOnlyCategories.includes(c.id));
+
+// "Promociones" no es una categoría real: junta los platillos con `offer: true`
+// y va justo después de Especialidades. Solo existe en el menú web.
+export const webCategories: { id: CategoryId; label: string }[] = [
+  webBase[0],
+  { id: "ofertas", label: "Promociones" },
+  ...webBase.slice(1),
+];
+
+export const inWebCategory = (d: MenuItem, id: CategoryId) =>
+  id === "ofertas" ? Boolean(d.offer) : d.category === id;
+
+// Promos 2x1: solo se anuncian en la pestaña "Promociones" del menú web. No están
+// en `menu`, así que no entran al carrito ni al menú por mesa.
+const promos: MenuItem[] = [
+  {
+    id: "promo-micheladas",
+    category: "ofertas",
+    offer: true,
+    info: true,
+    image: "/img/promo_miche.webp",
+    name: "Micheladas 2x1",
+    description:
+      "De lunes a miércoles: pide una michelada y llévate la segunda sin pagar de más.",
+    note: "Disponible en el restaurante.",
+  },
+  {
+    id: "promo-tragos",
+    category: "ofertas",
+    offer: true,
+    info: true,
+    image: "/img/tragos.webp",
+    name: "Tragos 2x1",
+    description:
+      "Jueves y viernes: pide un trago y llévate el segundo sin pagar de más.",
+    note: "Disponible en el restaurante.",
+  },
+];
+
+export const webMenu = [
+  ...menu.filter((d) => !tableOnlyCategories.includes(d.category)),
+  ...promos,
 ];

@@ -41,20 +41,6 @@ export const MichePromoBanner = () => (
             </span>
           ))}
         </div>
-        <a
-          href="#menu"
-          onClick={() =>
-            window.dispatchEvent(
-              new CustomEvent("menu:select-category", {
-                detail: "cocteleria",
-              }),
-            )
-          }
-          className="bg-gold text-ink hover:bg-orange mt-8 inline-flex min-h-12 items-center gap-2 rounded-full px-7 text-base font-semibold transition-colors"
-        >
-          Ver tragos en el menú
-          <span aria-hidden="true">→</span>
-        </a>
       </div>
     </div>
   </section>

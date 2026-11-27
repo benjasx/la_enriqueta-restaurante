@@ -14,6 +14,7 @@ import { KaraokeBanner } from "@/components/KaraokeBanner";
 import { LocalBanner } from "@/components/LocalBanner";
 import { Menu } from "@/components/Menu";
 import { MichePromoBanner } from "@/components/MichePromoBanner";
+import { TragosPromoBanner } from "@/components/TragosPromoBanner";
 
 export const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -35,6 +36,7 @@ export const App = () => {
         <Menu />
         <KaraokeBanner />
         <MichePromoBanner />
+        <TragosPromoBanner />
         <About />
         <Gallery />
         <LocalBanner />

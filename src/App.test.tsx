@@ -24,7 +24,7 @@ describe("App", () => {
 
   it("filters the menu by category", async () => {
     render(<App />);
-    expect(screen.getAllByRole("tab")).toHaveLength(11);
+    expect(screen.getAllByRole("tab")).toHaveLength(10);
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
     await userEvent.click(
       screen.getByRole("tab", { name: /antojitos tradicionales/i }),
@@ -32,33 +32,41 @@ describe("App", () => {
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(7);
   });
 
-  it("shows all 58 menu items across the tabs", async () => {
+  it("shows all web menu items across the tabs (offers are listed twice)", async () => {
     render(<App />);
     let total = 0;
     for (const tab of screen.getAllByRole("tab")) {
       await userEvent.click(tab);
       total += screen.getAllByRole("heading", { level: 3 }).length;
     }
-    expect(total).toBe(58);
+    expect(total).toBe(48);
   });
 
-  it("adds liquor by glass or bottle to the cart with the exact price", async () => {
+  it("Ver Promociones opens the Promociones tab, right after Especialidades", async () => {
     render(<App />);
+    const tabs = screen.getAllByRole("tab").map((t) => t.textContent);
+    expect(tabs[1]).toMatch(/^Promociones/);
     await userEvent.click(
-      screen.getByRole("tab", { name: /licores y vinos/i }),
+      screen.getByRole("link", { name: /ver promociones/i }),
     );
-    await userEvent.click(
-      screen.getByRole("button", { name: /agregar whisky black label copeo/i }),
-    );
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /agregar whisky black label botella/i,
-      }),
+    expect(screen.getByRole("tab", { name: /^promociones/i })).toHaveAttribute(
+      "aria-selected",
+      "true",
     );
     expect(
-      screen.getByRole("button", { name: /ver pedido/i }),
-    ).toHaveAccessibleName(/2 piezas, \$2,669/);
-    expect(document.querySelector('#menu a[href^="https://wa.me"]')).toBeNull();
+      screen.getByRole("heading", {
+        level: 3,
+        name: /promociones de tamales/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps drinks and liquor out of the web menu (table menu only)", () => {
+    render(<App />);
+    expect(screen.queryByRole("tab", { name: /licores y vinos/i })).toBeNull();
+    expect(
+      screen.queryByRole("tab", { name: /coctelería y cervezas/i }),
+    ).toBeNull();
   });
 
   it("merges repeated adds into one cart line and sends the whole order", async () => {

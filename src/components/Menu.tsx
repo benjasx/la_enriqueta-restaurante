@@ -6,8 +6,9 @@ import { MenuSearch, NoResults } from "@/components/MenuSearch";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import {
-  categories,
-  menu,
+  webCategories,
+  webMenu,
+  inWebCategory,
   menuDisclaimer,
   menuNotice,
   money,
@@ -52,10 +53,10 @@ export const Menu = () => {
       behavior: "smooth",
     });
   const visible = searching
-    ? menu.filter((d) => matchesQuery(d, query))
-    : menu.filter((d) => d.category === cat);
+    ? webMenu.filter((d) => matchesQuery(d, query))
+    : webMenu.filter((d) => inWebCategory(d, cat));
   const count = (id: CategoryId) =>
-    menu.filter((d) => d.category === id).length;
+    webMenu.filter((d) => inWebCategory(d, id)).length;
 
   return (
     <section
@@ -120,7 +121,7 @@ export const Menu = () => {
               onScroll={updateEdges}
               className="bg-sand flex w-fit max-w-full scrollbar-none gap-1 overflow-x-auto overflow-y-hidden overscroll-x-contain rounded-full p-1.5 [&::-webkit-scrollbar]:hidden"
             >
-              {categories.map((c) => (
+              {webCategories.map((c) => (
                 <button
                   key={c.id}
                   type="button"
@@ -151,7 +152,7 @@ export const Menu = () => {
         {searching && visible.length === 0 && <NoResults query={query} />}
         <div className="-mx-5 flex snap-x snap-mandatory scroll-px-5 items-start gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain px-5 pt-2 pb-4 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] sm:items-start sm:gap-5 sm:overflow-visible sm:px-0 sm:pt-0 sm:pb-0 [&::-webkit-scrollbar]:hidden">
           {visible.map((d, i) => {
-            const label = priceLabel(d);
+            const label = d.info ? "" : priceLabel(d);
             const grouped = Boolean(d.wide);
             const rows = d.options;
             const dual = rows?.some((r) => r.bottlePrice !== undefined);
@@ -171,10 +172,14 @@ export const Menu = () => {
                 <motion.article
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="rounded-card shadow-card flex flex-col overflow-hidden bg-white transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(120,20,60,0.4)]"
+                  className={`rounded-card shadow-card flex flex-col overflow-hidden bg-white transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(120,20,60,0.4)] ${
+                    grouped && d.image ? "sm:grid sm:grid-cols-[2fr_3fr]" : ""
+                  }`}
                 >
-                  {!grouped && (
-                    <div className="relative aspect-[4/3]">
+                  {(!grouped || d.image) && (
+                    <div
+                      className={`relative ${grouped ? "aspect-[4/3] sm:aspect-auto sm:min-h-[280px] sm:[&>img]:absolute sm:[&>img]:inset-0" : "aspect-[4/3]"}`}
+                    >
                       <Photo
                         src={d.image}
                         hint={`Foto: ${d.name.toLowerCase()}`}
@@ -187,12 +192,14 @@ export const Menu = () => {
                       <h3 className="font-display text-ink m-0 text-[23px] leading-[1.15] font-semibold">
                         {d.name}
                       </h3>
-                      <div className="ml-auto shrink-0 text-right whitespace-nowrap">
-                        <div className="font-display text-wine text-2xl leading-none font-bold">
-                          {label}
+                      {!d.info && (
+                        <div className="ml-auto shrink-0 text-right whitespace-nowrap">
+                          <div className="font-display text-wine text-2xl leading-none font-bold">
+                            {label}
+                          </div>
+                          {d.unit && <div className={mono}>{d.unit}</div>}
                         </div>
-                        {d.unit && <div className={mono}>{d.unit}</div>}
-                      </div>
+                      )}
                     </div>
                     <p className="text-body m-0 text-[14.5px] leading-[1.55] text-pretty">
                       {d.description}
@@ -278,7 +285,7 @@ export const Menu = () => {
                       </ul>
                     )}
                     <div className="flex-1" />
-                    {!rows && (
+                    {!rows && !d.info && (
                       <button
                         type="button"
                         aria-label={`Agregar ${d.name}`}

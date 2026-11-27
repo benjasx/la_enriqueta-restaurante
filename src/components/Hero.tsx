@@ -90,6 +90,24 @@ export const Hero = () => (
           >
             Ver Menú Digital
           </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.97 }}
+            href="#menu"
+            onClick={() =>
+              window.dispatchEvent(
+                new CustomEvent("menu:select-category", { detail: "ofertas" }),
+              )
+            }
+            className="bg-gold text-ink hover:bg-orange relative inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold shadow-[0_0_0_4px_rgba(201,154,46,0.35),0_10px_24px_-6px_rgba(0,0,0,0.5)] transition-colors"
+          >
+            <span aria-hidden="true">🔥</span>
+            Ver Promociones
+            <span
+              aria-hidden="true"
+              className="bg-orange absolute -top-1 -right-1 size-3.5 animate-ping rounded-full"
+            />
+          </motion.a>
         </motion.div>
         <motion.p
           {...enter(0.6)}
