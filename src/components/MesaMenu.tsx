@@ -27,20 +27,32 @@ export const Dish = ({ d }: { d: MenuItem }) => {
   const add = (optionLabel?: string, size?: Size) =>
     dispatch({ type: "add", line: { itemId: d.id, optionLabel, size } });
 
+  const split = Boolean(d.wide && d.image);
+
   return (
     <article
-      className={`shadow-card flex min-w-0 flex-col overflow-hidden rounded-3xl bg-white ${
+      className={`shadow-card text-ink flex min-w-0 flex-col overflow-hidden rounded-3xl bg-white ${
         d.wide ? "col-span-full" : ""
-      }`}
+      } ${split ? "sm:grid sm:grid-cols-[2fr_3fr]" : ""}`}
     >
-      {d.image && (
-        <img
-          src={d.image}
-          alt={d.name}
-          loading="lazy"
-          className="h-[210px] w-full object-cover"
-        />
-      )}
+      {d.image &&
+        (split ? (
+          <div className="relative h-[210px] sm:h-auto sm:min-h-[280px]">
+            <img
+              src={d.image}
+              alt={d.name}
+              loading="lazy"
+              className="absolute inset-0 size-full object-cover"
+            />
+          </div>
+        ) : (
+          <img
+            src={d.image}
+            alt={d.name}
+            loading="lazy"
+            className="h-[210px] w-full object-cover"
+          />
+        ))}
       <div className="flex flex-col gap-2.5 px-[22px] pt-[22px] pb-[18px]">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="font-display m-0 text-[23px] leading-[1.15] font-normal">

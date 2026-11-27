@@ -106,7 +106,7 @@ describe("App", () => {
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(5);
     await userEvent.click(
       screen.getByRole("button", {
-        name: /agregar promociones de tamales desayuno para 2/i,
+        name: /agregar promociones de tamales dorados desayuno para 2/i,
       }),
     );
     expect(

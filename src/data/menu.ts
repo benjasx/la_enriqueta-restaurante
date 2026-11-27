@@ -229,21 +229,21 @@ export const menu: MenuItem[] = [
   {
     id: "promociones-tamales",
     category: "desayunos",
-    name: "Promociones de Tamales",
+    name: "Promociones de Tamales Dorados",
     image: "/img/tama.webp",
     description: "El antojo perfecto para comenzar el día.",
     wide: true,
     offer: true,
     options: [
-      { label: "Tamal + Café con refill", price: 85 },
-      { label: "Tamal + Champurrado", price: 85 },
+      { label: "Tamal dorado + Café con refill", price: 85 },
+      { label: "Tamal dorado + Champurrado", price: 85 },
       {
         label: "Desayuno para 2",
         price: 159,
-        description: "2 tamales + 1 café con refill + 1 champurrado.",
+        description: "2 tamales dorados + 1 café con refill + 1 champurrado.",
       },
       {
-        label: "Tamal + Empanada dulce de requesón",
+        label: "Tamal dorado + Empanada dulce de requesón",
         price: 119,
         description: "Más café con refill o champurrado.",
       },
