@@ -66,6 +66,16 @@ describe("MesaApp access", () => {
     expect(
       screen.getByRole("link", { name: "Viernes de karaoke" }),
     ).toHaveAttribute("href", "#karaoke");
+    expect(screen.getByRole("link", { name: /ver ofertas/i })).toHaveAttribute(
+      "href",
+      "#ofertas",
+    );
+    expect(
+      screen.getByRole("img", { name: /micheladas 2x1/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: /tragos 2x1/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Ver coctelería" }),
     ).toHaveAttribute("href", "#cocteleria");

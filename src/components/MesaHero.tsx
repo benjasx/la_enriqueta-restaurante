@@ -40,6 +40,17 @@ export const MesaHero = () => (
         >
           Viernes de karaoke
         </a>
+        <a
+          href="#ofertas"
+          className={`${button} bg-gold text-ink hover:bg-orange relative inline-flex items-center gap-2 font-bold shadow-[0_0_0_4px_rgba(212,166,58,0.35),0_10px_24px_-8px_rgba(58,29,34,0.5)] transition-colors`}
+        >
+          <span aria-hidden="true">🔥</span>
+          Ver Ofertas
+          <span
+            aria-hidden="true"
+            className="bg-orange absolute -top-1 -right-1 size-3.5 animate-ping rounded-full"
+          />
+        </a>
       </div>
     </div>
     <div className="grid min-w-0 grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] grid-rows-[200px_200px] gap-3">

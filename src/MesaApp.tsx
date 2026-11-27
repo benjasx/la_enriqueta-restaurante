@@ -11,6 +11,7 @@ import { MesaHero } from "@/components/MesaHero";
 import { MesaKaraoke } from "@/components/MesaKaraoke";
 import { MesaLocked } from "@/components/MesaLocked";
 import { MesaMenu } from "@/components/MesaMenu";
+import { MesaOfertas } from "@/components/MesaOfertas";
 import { readAccess } from "@/table/tableSession";
 import { TableContext } from "@/table/useTable";
 
@@ -46,6 +47,7 @@ export const MesaApp = () => {
           <main>
             <MesaHero />
             <BurroBanner menuHref="#especialidades" />
+            <MesaOfertas />
             <MesaMenu />
             <MesaKaraoke />
           </main>
