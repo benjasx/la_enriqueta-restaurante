@@ -26,9 +26,10 @@ export const About = () => (
           </h2>
         </Reveal>
         <p className="m-0 max-w-[560px] text-[clamp(17px,1.8vw,20px)] leading-[1.6] text-pretty text-[#f5e6da]">
-          Cocinamos las recetas que crecimos comiendo en Tuxpan: masa hecha a
-          mano, guisos de olla y salsas del día. Aquí en Tepic, con el mismo
-          sazón de siempre.
+          Desde Tuxpan, el corazón del sazón y el reino del sabor, trajimos a
+          Tepic las recetas con las que crecimos. En La Enriqueta cocinamos los
+          guisos y preparamos las salsas cada día. Así servimos los antojitos
+          tuxpeños que nos saben a casa, con el mismo sazón de siempre.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           {badges.map((b) => (
